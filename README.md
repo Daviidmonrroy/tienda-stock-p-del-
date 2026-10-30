@@ -16,11 +16,12 @@ vendedores por zona, comisiones y un panel de resúmenes para el dueño. Pensado
 | `docs/` | Manual de marca, arquitectura y preguntas abiertas. |
 
 ## Decisiones tomadas
-- Roles iniciales: administrador y vendedor.
+- Roles: administrador, empleado (local o cancha) y vendedor.
 - Dos ubicaciones con stock propio: local y cancha. Cada vendedor suma una "mochila" propia.
 - El stock sale de un libro de movimientos, no de un número editable.
 - Montos en centavos enteros. Ventas desde el celular con identificador propio para sincronizar sin duplicar.
-- Comisión configurable por producto: porcentaje, o lo que el vendedor agrega sobre el precio mínimo.
+- Comisión: un porcentaje único de la venta, igual para todos los productos, liquidado por mes. Precio mínimo y máximo por producto.
+- Cobros en efectivo, transferencia o fiado (con saldo del cliente). Sin facturación AFIP.
 - El costo se congela en cada venta para que la ganancia histórica no cambie.
 
 ## Etapas
@@ -31,4 +32,4 @@ vendedores por zona, comisiones y un panel de resúmenes para el dueño. Pensado
 5. Panel del dueño: resúmenes por día, semana y mes; gastos.
 6. Extras: Mercado Pago, AFIP, WhatsApp.
 
-Ver `docs/` para el detalle y las preguntas pendientes con el dueño.
+Ver `docs/decisiones-del-dueno.md` y `docs/` para el detalle y las preguntas pendientes con el dueño.

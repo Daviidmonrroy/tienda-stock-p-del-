@@ -1,7 +1,8 @@
--- Vibra Deportiva · esquema MySQL 8 (borrador v0.1)
+-- Vibra Deportiva · esquema MySQL 8 (borrador v0.2)
 -- Montos en centavos (BIGINT). Stock = suma de movimientos. Sin validar contra un servidor MySQL todavía.
 SET NAMES utf8mb4;
 
+-- Las zonas son ciudades.
 CREATE TABLE zonas (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(80) NOT NULL UNIQUE
@@ -12,11 +13,13 @@ CREATE TABLE usuarios (
   nombre VARCHAR(120) NOT NULL,
   email VARCHAR(160) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
-  rol ENUM('admin','vendedor') NOT NULL,
-  zona_id INT UNSIGNED NULL,
+  rol ENUM('admin','empleado','vendedor') NOT NULL,
+  zona_id INT UNSIGNED NULL,               -- vendedores: su ciudad
+  ubicacion_id INT UNSIGNED NULL,          -- empleados: el sector donde trabajan (local o cancha)
   activo TINYINT(1) NOT NULL DEFAULT 1,
   creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (zona_id) REFERENCES zonas(id)
+  -- FK de ubicacion_id se agrega abajo, después de crear ubicaciones
 );
 
 -- Dónde puede haber stock: local, cancha, o la "mochila" de un vendedor.
@@ -28,6 +31,14 @@ CREATE TABLE ubicaciones (
   activa TINYINT(1) NOT NULL DEFAULT 1,
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+ALTER TABLE usuarios ADD FOREIGN KEY (ubicacion_id) REFERENCES ubicaciones(id);
+
+-- Ajustes del negocio (una fila por clave).
+CREATE TABLE configuracion (
+  clave VARCHAR(60) PRIMARY KEY,
+  valor VARCHAR(255) NOT NULL
+);
+-- 'comision_vendedor_bp': porcentaje único de comisión en puntos básicos (1000 = 10 %). Igual para todos los productos.
 
 CREATE TABLE categorias (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(80) NOT NULL UNIQUE);
 CREATE TABLE marcas     (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, nombre VARCHAR(80) NOT NULL UNIQUE);
@@ -52,22 +63,12 @@ CREATE TABLE variantes (
   color VARCHAR(40) NULL,
   costo_centavos BIGINT NOT NULL DEFAULT 0,
   precio_lista_centavos BIGINT NOT NULL,   -- precio sugerido al público
-  precio_minimo_centavos BIGINT NOT NULL,  -- piso para vendedores
+  precio_minimo_centavos BIGINT NOT NULL,  -- piso para vendedores (lo ven)
+  precio_maximo_centavos BIGINT NOT NULL,  -- techo de venta
   stock_minimo INT NOT NULL DEFAULT 0,
   activa TINYINT(1) NOT NULL DEFAULT 1,
   FOREIGN KEY (producto_id) REFERENCES productos(id),
-  CHECK (precio_minimo_centavos <= precio_lista_centavos)
-);
-
--- Regla de comisión por producto. Soporta las dos ideas que se hablan:
---  'porcentaje'   -> comisión = valor% del precio vendido
---  'sobre_minimo' -> comisión = precio vendido - precio mínimo (el vendedor se queda con lo que agrega)
-CREATE TABLE reglas_comision (
-  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  producto_id INT UNSIGNED NOT NULL UNIQUE,
-  modo ENUM('porcentaje','sobre_minimo') NOT NULL,
-  valor_bp INT NOT NULL DEFAULT 0,         -- puntos básicos (1000 = 10 %); 0 si es sobre_minimo
-  FOREIGN KEY (producto_id) REFERENCES productos(id)
+  CHECK (precio_minimo_centavos <= precio_lista_centavos AND precio_lista_centavos <= precio_maximo_centavos)
 );
 
 CREATE TABLE clientes (
@@ -129,7 +130,8 @@ CREATE TABLE ventas (
   vendedor_id INT UNSIGNED NULL,           -- NULL = venta de mostrador
   cliente_id INT UNSIGNED NULL,
   fecha DATETIME NOT NULL,
-  medio_pago ENUM('efectivo','transferencia','tarjeta','mercadopago','otro') NOT NULL,
+  medio_pago ENUM('efectivo','transferencia','fiado') NOT NULL,
+  pagado_centavos BIGINT NOT NULL DEFAULT 0,  -- si es fiado, lo que ya pagó; el saldo es total - pagado
   estado ENUM('confirmada','anulada') NOT NULL DEFAULT 'confirmada',
   total_centavos BIGINT NOT NULL,
   FOREIGN KEY (ubicacion_id) REFERENCES ubicaciones(id),
@@ -154,7 +156,7 @@ CREATE TABLE movimientos_stock (
   id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   variante_id INT UNSIGNED NOT NULL,
   ubicacion_id INT UNSIGNED NOT NULL,
-  tipo ENUM('compra','venta','asignacion_salida','asignacion_entrada','devolucion_salida','devolucion_entrada','ajuste','anulacion') NOT NULL,
+  tipo ENUM('compra','venta','asignacion_salida','asignacion_entrada','devolucion_salida','devolucion_entrada','perdida','ajuste','anulacion') NOT NULL,
   cantidad INT NOT NULL,
   referencia_tipo VARCHAR(30) NULL,
   referencia_id INT UNSIGNED NULL,
@@ -181,7 +183,7 @@ CREATE TABLE liquidaciones (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   vendedor_id INT UNSIGNED NOT NULL,
   desde DATE NOT NULL,
-  hasta DATE NOT NULL,
+  hasta DATE NOT NULL,                     -- período mensual
   total_centavos BIGINT NOT NULL,
   estado ENUM('pendiente','pagada') NOT NULL DEFAULT 'pendiente',
   pagada_en DATETIME NULL,
@@ -193,6 +195,20 @@ CREATE TABLE liquidacion_items (
   PRIMARY KEY (liquidacion_id, venta_item_id),
   FOREIGN KEY (liquidacion_id) REFERENCES liquidaciones(id),
   FOREIGN KEY (venta_item_id) REFERENCES venta_items(id)
+);
+
+-- Cobros de ventas fiadas (cuenta corriente del cliente).
+CREATE TABLE cobros (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  venta_id INT UNSIGNED NOT NULL,
+  cliente_id INT UNSIGNED NOT NULL,
+  fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  monto_centavos BIGINT NOT NULL CHECK (monto_centavos > 0),
+  medio_pago ENUM('efectivo','transferencia') NOT NULL,
+  usuario_id INT UNSIGNED NOT NULL,
+  FOREIGN KEY (venta_id) REFERENCES ventas(id),
+  FOREIGN KEY (cliente_id) REFERENCES clientes(id),
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE auditoria (
