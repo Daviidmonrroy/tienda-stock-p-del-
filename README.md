@@ -10,10 +10,12 @@ vendedores por zona, comisiones y un panel de resúmenes para el dueño. Pensado
 |---|---|
 | `prototype/` | Prototipo funcional de una sola página (guarda en el navegador). Sirve de referencia visual. |
 | `db/` | Esquema MySQL 8 (borrador v0.1). |
-| `server/` | API (pendiente). |
+| `server/` | API en Node con las reglas del negocio y pruebas automáticas. Ver `server/README.md`. |
 | `app/` | App web instalable en el celular (pendiente). |
 | `brand/` | Logos, avatar, íconos y favicon en SVG y PNG. |
-| `docs/` | Manual de marca, arquitectura y preguntas abiertas. |
+| `docs/negocio/` | Respuestas del dueño y preguntas abiertas. |
+| `docs/arquitectura/` | Cómo está pensado el sistema. |
+| `docs/marca/` | Manual de marca (PDF). |
 
 ## Decisiones tomadas
 - Roles: administrador, empleado (local o cancha) y vendedor.
@@ -25,11 +27,11 @@ vendedores por zona, comisiones y un panel de resúmenes para el dueño. Pensado
 - El costo se congela en cada venta para que la ganancia histórica no cambie.
 
 ## Etapas
-1. Servidor, login y roles. Productos, variantes, stock por ubicación y ventas.
+1. Servidor, login y roles (en curso: reglas de venta, login y roles listos con pruebas; falta MySQL). Productos, variantes, stock por ubicación y ventas.
 2. Compras, asignación a vendedores y devoluciones.
 3. Comisiones y liquidaciones.
 4. Modo celular y sin conexión para vendedores.
 5. Panel del dueño: resúmenes por día, semana y mes; gastos.
 6. Extras: Mercado Pago, AFIP, WhatsApp.
 
-Ver `docs/decisiones-del-dueno.md` y `docs/` para el detalle y las preguntas pendientes con el dueño.
+Ver `docs/negocio/decisiones-del-dueno.md` y `docs/negocio/preguntas-dueno.md`.
