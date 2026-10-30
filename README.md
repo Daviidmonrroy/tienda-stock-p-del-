@@ -1,0 +1,1 @@
+# tienda-stock-p-del-
