@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vibra Deportiva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: encabezado negro con el logotipo; contenido en tarjetas. Identidad Vibra Deportiva: rojo impacto, negro cancha, gris pala. */
+:root{
+  --bg:#F3F1F2; --panel:#FFFFFF; --ink:#0B1015; --muted:#5B575C; --line:#DDD9DC;
+  --court:#D12E2B; --court-hover:#B02522; --link:#D12E2B;
+  --head:#0B1015; --head-ink:#FFFFFF; --head-muted:#B9B4B8; --head-line:#2A2F37;
+  --accent:#F03A37; --danger:#D12E2B; --danger-ink:#D12E2B;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1015; --panel:#1B1F26; --ink:#F1EFF0; --muted:#A8A2A7; --line:#2A2F37;
+    --court-hover:#E8453F; --link:#FF7A77; --danger-ink:#FF7A77; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1015; --panel:#1B1F26; --ink:#F1EFF0; --muted:#A8A2A7; --line:#2A2F37;
+  --court-hover:#E8453F; --link:#FF7A77; --danger-ink:#FF7A77; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%}
+body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Inter','Segoe UI',system-ui,-apple-system,Arial,sans-serif;}
+header{position:sticky;top:0;padding-top:env(safe-area-inset-top,0px);background:var(--head);color:var(--head-ink);z-index:5;border-bottom:1px solid var(--head-line)}
+.head-in{max-width:1000px;margin:0 auto;padding:18px 20px;display:flex;align-items:center;gap:10px 22px;flex-wrap:wrap}
+.brand{width:250px;height:auto;flex-shrink:0;display:block}
+.sub{font-size:.8rem;color:var(--head-muted)}
+nav{display:flex;gap:2px;overflow-x:auto;max-width:1000px;margin:0 auto;background:var(--head);padding:0 12px;border-top:1px solid var(--head-line);-ms-overflow-style:none;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:none;color:var(--head-muted);padding:11px 14px;font-size:.86rem;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
+nav button.active{color:#fff;border-bottom-color:var(--accent);font-weight:600}
+@media(max-width:480px){.brand{width:210px}}
+main{max-width:1000px;margin:0 auto;padding:20px;padding-bottom:60px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px}
+.panel h2{margin:0 0 12px;font-size:1rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
+label{font-size:.72rem;color:var(--muted)}
+input,select{padding:8px 9px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);font-size:.88rem}
+button.btn{background:var(--court);color:#fff;border:none;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.85rem;font-weight:600}
+button.btn:hover{background:var(--court-hover)}
+button.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+button.btn.danger{background:var(--danger)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px}
+.tablewrap{overflow-x:auto}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.72rem;background:var(--line)}
+.pill.low{background:var(--danger);color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid2 .panel{margin-bottom:0}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.stat{font-size:1.7rem;font-weight:700}
+.statlabel{font-size:.75rem;color:var(--muted)}
+.detail-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
+.small{font-size:.78rem;color:var(--muted)}
+.catcell{display:flex;align-items:center;gap:10px}
+.ic{display:inline-flex;width:36px;height:36px;border-radius:9px;background:var(--head);align-items:center;justify-content:center;flex-shrink:0}
+.ic svg{width:26px;height:26px;display:block}
+a.link{color:var(--link);cursor:pointer;font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-in">
+    <svg class="brand" role="img" aria-label="Vibra Deportiva" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 573.55 142"><path d="M0 0 C52 0 88 38 88 94 C88 146 56 186 26 210 L12 244 L12 304 Q12 314 0 314 Q-12 314 -12 304 L-12 244 L-26 210 C-56 186 -88 146 -88 94 C-88 38 -52 0 0 0 Z M-9 220 L9 220 L0 240 Z M-6.5 172 a6.5 6.5 0 1 0 13 0 a6.5 6.5 0 1 0 -13 0 Z M-20.75 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M-35 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M-49.25 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M-63.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z M6.25 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M19 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M31.75 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M44.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z" fill="#F03A37" fill-rule="evenodd" transform="translate(39.8,0) scale(0.45)"/><path d="M135.86 60H142.18L164.25 0H158.53L144.36 39.58C143.03 43.25 141.34 48.2 139.08 55.05C136.79 48.2 135.14 43.25 133.81 39.58L119.35 0H113.59Z M184.98 0H179.54V60H184.98Z M205.71 60H227.25C240.62 60 247.67 53.48 247.67 43.45C247.67 34.99 241.91 30.24 235.19 29.15V29.07C241.19 27.18 245.25 22.67 245.25 15.7C245.25 6.04 237.97 0 226.37 0H205.71ZM211.15 55.09V31.93H227.54C236.19 31.93 242.11 36.36 242.11 43.65C242.11 50.86 236.72 55.09 227.25 55.09ZM211.15 27.1V4.91H226.57C234.7 4.91 239.86 9.1 239.86 15.99C239.86 22.47 234.91 27.1 227.21 27.1Z M265.62 60H271.06V35.68H286.6C286.92 35.68 287.29 35.68 287.61 35.68L300.62 60H306.94L293.33 34.79C301.26 32.62 306.29 26.5 306.29 17.84C306.29 6.97 298.64 0 286.96 0H265.62ZM271.06 30.77V4.91H286.8C295.38 4.91 300.9 9.91 300.9 17.84C300.9 25.73 295.38 30.77 286.88 30.77Z M319.09 60H324.81L331.29 42.2H357.55L363.95 60H369.75L347.64 0H341.32ZM333.06 37.29 339.22 20.42C340.71 16.27 342.28 11.76 344.5 5.07C346.67 11.76 348.24 16.27 349.73 20.42L355.77 37.29Z" fill="#FFFFFF"/><path d="M137.03 142C155.51 142 167.39 130.24 167.39 112.04C167.39 93.8 155.31 82 136.79 82H113.59V142ZM130.34 128.15V95.85H135.74C145.85 95.85 150.48 101.05 150.48 112.04C150.48 122.95 146.01 128.15 136.22 128.15Z M171.23 142H217.7V127.83H187.99V118.89H215.41V105.19H187.99V96.17H217.7V82H171.23Z M222.35 142H239.1V123.88H247.84C262.18 123.88 271.16 115.79 271.16 102.94C271.16 90.09 262.18 82 247.84 82H222.35ZM239.1 110.11V95.77H246.59C251.63 95.77 254.81 98.55 254.81 102.94C254.81 107.33 251.63 110.11 246.59 110.11Z M302.34 142.97C318.65 142.97 331.5 132.05 331.5 112.04C331.5 91.99 318.65 81.03 302.34 81.03C285.95 81.03 273.19 91.99 273.19 112.04C273.19 131.93 285.95 142.97 302.34 142.97ZM302.34 128.47C294.49 128.47 290.1 122.39 290.1 112.04C290.1 101.65 294.49 95.53 302.34 95.53C310.23 95.53 314.58 101.65 314.58 112.04C314.58 122.39 310.23 128.47 302.34 128.47Z M335.34 142H352.09V123.23H359.58L368.56 142H386L375 119.61C380.84 116.15 384.14 110.39 384.14 102.94C384.14 90.09 375.16 82 360.83 82H335.34ZM352.09 110.27V95.61H359.58C364.61 95.61 367.79 98.55 367.79 102.94C367.79 107.33 364.61 110.27 359.58 110.27Z M385.61 96.17H402.68V142H419.44V96.17H436.51V82H385.61Z M457.1 82H440.35V142H457.1Z M479.47 142H501.7L521.19 82H502.99L496.34 105.28C494.33 112.28 492.48 119.25 490.66 126.26C488.77 119.25 486.84 112.28 484.75 105.28L477.78 82H459.34Z M510.53 142H528.86L531.8 132.13H551.85L554.71 142H573.55L553.22 82H530.67ZM535.66 119.25 535.82 118.72C538 111.48 540.01 104.47 541.98 97.18C543.92 104.47 545.89 111.48 547.98 118.72L548.15 119.25Z" fill="#FFFFFF"/></svg>
+    <div class="sub">Sistema de stock y ventas</div>
+  </div>
+  <nav id="nav"></nav>
+</header>
+<main id="main"></main>
+
+<script>
+const KEY='padel_stock_db_v1';
+function seed(){
+  return {
+    seq:{cat:6,marca:2,zona:2,prov:1,prod:7,cli:0,vend:0,venta:0,compra:0},
+    categorias:[{id:1,nombre:'Paletas'},{id:2,nombre:'Indumentaria'},{id:3,nombre:'Accesorios'},{id:4,nombre:'Zapatillas'},{id:5,nombre:'Paleteros'},{id:6,nombre:'Tubos de pelotas'}],
+    marcas:[{id:1,nombre:'Marca A'},{id:2,nombre:'Marca B'}],
+    zonas:[{id:1,nombre:'Zona Norte'},{id:2,nombre:'Zona Sur'}],
+    proveedores:[{id:1,nombre:'Distribuidora Pádel SA',telefono:'',activo:true}],
+    productos:[
+      {id:1,categoria:1,marca:1,nombre:'Paleta Control 1',precio:150000,stock:10,stock_min:2,activo:true},
+      {id:2,categoria:1,marca:2,nombre:'Paleta Power 1',precio:180000,stock:8,stock_min:2,activo:true},
+      {id:3,categoria:2,marca:1,nombre:'Remera Deportiva',precio:45000,stock:20,stock_min:5,activo:true},
+      {id:4,categoria:3,marca:2,nombre:'Overgrip',precio:8000,stock:50,stock_min:10,activo:true},
+      {id:5,categoria:4,marca:1,nombre:'Zapatillas Court Pro',precio:95000,stock:12,stock_min:3,activo:true},
+      {id:6,categoria:5,marca:2,nombre:'Paletero Tour',precio:70000,stock:6,stock_min:2,activo:true},
+      {id:7,categoria:6,marca:1,nombre:'Tubo x3 Pelotas Pro',precio:9500,stock:40,stock_min:10,activo:true}
+    ],
+    clientes:[], vendedores:[], ventas:[], compras:[]
+  };
+}
+let db;
+try{ db = JSON.parse(localStorage.getItem(KEY)) || seed(); }catch(e){ db = seed(); }
+const CAT_ICONS = {"paleta": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Paletas</title><path d=\"M0 0 C52 0 88 38 88 94 C88 146 56 186 26 210 L12 244 L12 304 Q12 314 0 314 Q-12 314 -12 304 L-12 244 L-26 210 C-56 186 -88 146 -88 94 C-88 38 -52 0 0 0 Z M-9 220 L9 220 L0 240 Z M-6.5 172 a6.5 6.5 0 1 0 13 0 a6.5 6.5 0 1 0 -13 0 Z M-20.75 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M-35 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M-49.25 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M-63.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z M6.25 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M19 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M31.75 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M44.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z\" fill=\"#F03A37\" fill-rule=\"evenodd\" transform=\"translate(0,-68) scale(0.43)\"/></svg>", "pelota": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Pelotas</title><circle cx=\"0\" cy=\"12\" r=\"38\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4.18\" stroke-linecap=\"round\"><path d=\"M-32.3 -5.1 Q-7.6 12 -32.3 29.1\"/><path d=\"M32.3 -5.1 Q7.6 12 32.3 29.1\"/></g><g transform=\"translate(0,12)\"><path d=\"M-33.86 -43.34 A55 55 0 0 1 33.86 -43.34\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M-43.1 -55.16 A70 70 0 0 1 43.1 -55.16\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"5\" stroke-linecap=\"round\"/></g></svg>", "tubo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Tubos de pelotas</title><g transform=\"translate(0,42)\"><rect x=\"-21\" y=\"-112\" width=\"42\" height=\"112\" rx=\"9\" fill=\"#FFFFFF\" fill-opacity=\".14\" stroke=\"#FFFFFF\" stroke-width=\"4\"/><circle cx=\"0\" cy=\"-18\" r=\"15\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.65\" stroke-linecap=\"round\"><path d=\"M-12.75 -24.75 Q-3 -18 -12.75 -11.25\"/><path d=\"M12.75 -24.75 Q3 -18 12.75 -11.25\"/></g><circle cx=\"0\" cy=\"-52\" r=\"15\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.65\" stroke-linecap=\"round\"><path d=\"M-12.75 -58.75 Q-3 -52 -12.75 -45.25\"/><path d=\"M12.75 -58.75 Q3 -52 12.75 -45.25\"/></g><circle cx=\"0\" cy=\"-86\" r=\"15\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.65\" stroke-linecap=\"round\"><path d=\"M-12.75 -92.75 Q-3 -86 -12.75 -79.25\"/><path d=\"M12.75 -92.75 Q3 -86 12.75 -79.25\"/></g><rect x=\"-25\" y=\"-124\" width=\"50\" height=\"12\" rx=\"5\" fill=\"#FFFFFF\"/></g></svg>", "paletero": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Paleteros</title><g transform=\"translate(0,56)\"><path d=\"M-14 -118 Q0 -148 14 -118\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><rect x=\"-34\" y=\"-118\" width=\"68\" height=\"118\" rx=\"15\" fill=\"#F03A37\"/><rect x=\"-34\" y=\"-92\" width=\"68\" height=\"7\" fill=\"#FFFFFF\"/><rect x=\"-26\" y=\"-52\" width=\"52\" height=\"38\" rx=\"10\" fill=\"#1B1F26\"/><line x1=\"-17\" y1=\"-41\" x2=\"17\" y2=\"-41\" stroke=\"#FFFFFF\" stroke-width=\"3\" stroke-linecap=\"round\"/></g></svg>", "zapatilla": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Zapatillas</title><g transform=\"translate(-2,38) scale(0.78)\"><path d=\"M-70 -14 L-72 -58 Q-72 -66 -62 -66 L-40 -68 Q-28 -68 -22 -60 L-12 -48 Q0 -42 14 -38 Q40 -32 62 -30 Q78 -28 79 -18 L78 -14 Z\" fill=\"#F03A37\"/><path d=\"M-64 -26 Q-10 -22 50 -20\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><g stroke=\"#FFFFFF\" stroke-width=\"3.4\" stroke-linecap=\"round\"><line x1=\"-9\" y1=\"-55.0\" x2=\"-1\" y2=\"-44.0\"/><line x1=\"5\" y1=\"-50.3\" x2=\"13\" y2=\"-39.3\"/><line x1=\"19\" y1=\"-45.7\" x2=\"27\" y2=\"-34.7\"/></g><rect x=\"-76\" y=\"-14\" width=\"154\" height=\"14\" rx=\"7\" fill=\"#FFFFFF\"/></g></svg>", "remera": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Indumentaria</title><g transform=\"translate(0,0) scale(0.6)\"><path d=\"M-34 -76 Q0 -54 34 -76 L82 -52 L100 -4 L62 8 L52 -8 L52 80 L-52 80 L-52 -8 L-62 8 L-100 -4 L-82 -52 Z\" fill=\"#F03A37\"/><rect x=\"-52\" y=\"18\" width=\"104\" height=\"10\" fill=\"#FFFFFF\"/><path d=\"M-34 -76 Q0 -54 34 -76\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"7\" stroke-linecap=\"round\"/></g></svg>"};
+function catIcon(n){
+  n=(n||'').toLowerCase();
+  let k='pelota';
+  if(/paletero|bolso|mochila/.test(n))k='paletero';
+  else if(/paleta|pala\b/.test(n))k='paleta';
+  else if(/zapat|calzado/.test(n))k='zapatilla';
+  else if(/tubo|pelota/.test(n))k='tubo';
+  else if(/indument|ropa|remera|short/.test(n))k='remera';
+  return '<span class="ic" aria-hidden="true">'+CAT_ICONS[k]+'</span>';
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(db)); }catch(e){ console.error('No se pudo guardar', e); } }
+function nid(kind){ db.seq[kind]=(db.seq[kind]||0)+1; return db.seq[kind]; }
+function money(n){ return '$'+Number(n||0).toLocaleString('es-AR'); }
+function byId(arr,id){ return arr.find(x=>x.id===Number(id)); }
+
+const TABS=[
+  {id:'dashboard',label:'Inicio'},
+  {id:'productos',label:'Productos'},
+  {id:'ventas',label:'Ventas'},
+  {id:'compras',label:'Compras'},
+  {id:'gente',label:'Clientes y vendedores'},
+  {id:'catalogos',label:'Zonas y proveedores'},
+  {id:'reportes',label:'Reportes'},
+];
+let active='dashboard';
+const nav=document.getElementById('nav');
+TABS.forEach(t=>{
+  const b=document.createElement('button');
+  b.textContent=t.label; b.onclick=()=>{active=t.id; render();};
+  b.dataset.id=t.id; nav.appendChild(b);
+});
+function markNav(){ [...nav.children].forEach(b=>b.classList.toggle('active', b.dataset.id===active)); }
+
+function render(){
+  markNav();
+  const m=document.getElementById('main');
+  m.innerHTML='';
+  ({dashboard:renderDashboard, productos:renderProductos, ventas:renderVentas,
+    compras:renderCompras, gente:renderGente, catalogos:renderCatalogos, reportes:renderReportes})[active](m);
+}
+
+function panel(title){ const d=document.createElement('div'); d.className='panel'; if(title){const h=document.createElement('h2'); h.textContent=title; d.appendChild(h);} return d; }
+
+// ---------- DASHBOARD ----------
+function renderDashboard(m){
+  const totalStock=db.productos.reduce((s,p)=>s+p.stock,0);
+  const bajos=db.productos.filter(p=>p.activo && p.stock<=p.stock_min).length;
+  const totalVentas=db.ventas.reduce((s,v)=>s+v.total,0);
+  const totalComisiones=db.ventas.reduce((s,v)=>s+v.comision_monto,0);
+  const g=document.createElement('div'); g.className='grid2';
+  g.innerHTML=`
+    <div class="panel"><div class="stat">${db.productos.length}</div><div class="statlabel">Productos activos</div></div>
+    <div class="panel"><div class="stat" style="${bajos?'color:var(--danger-ink)':''}">${bajos}</div><div class="statlabel">Con stock bajo</div></div>
+    <div class="panel"><div class="stat">${money(totalVentas)}</div><div class="statlabel">Total vendido (histórico)</div></div>
+    <div class="panel"><div class="stat">${money(totalComisiones)}</div><div class="statlabel">Comisiones generadas</div></div>
+  `;
+  m.appendChild(g);
+  const p=panel('Últimas ventas');
+  const rows=db.ventas.slice(-5).reverse().map(v=>{
+    const vend=byId(db.vendedores,v.vendedor); const cli=byId(db.clientes,v.cliente);
+    return `<tr><td>#${v.id}</td><td>${vend?vend.nombre:'-'}</td><td>${cli?cli.nombre:'Consumidor final'}</td><td>${money(v.total)}</td></tr>`;
+  }).join('') || `<tr><td colspan="4" class="small">Todavía no hay ventas registradas.</td></tr>`;
+  p.innerHTML+=`<div class="tablewrap"><table><tr><th>Venta</th><th>Vendedor</th><th>Cliente</th><th>Total</th></tr>${rows}</table></div>`;
+  m.appendChild(p);
+}
+
+// ---------- PRODUCTOS ----------
+function renderProductos(m){
+  const p=panel('Nuevo producto');
+  p.innerHTML+=`
+    <div class="row">
+      <div class="field"><label>Nombre</label><input id="pf-nombre"></div>
+      <div class="field"><label>Categoría</label><select id="pf-cat">${db.categorias.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
+      <div class="field"><label>Marca</label><select id="pf-marca">${db.marcas.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
+      <div class="field"><label>Precio venta</label><input id="pf-precio" type="number" min="0"></div>
+      <div class="field"><label>Stock inicial</label><input id="pf-stock" type="number" min="0" value="0"></div>
+      <div class="field"><label>Stock mínimo</label><input id="pf-min" type="number" min="0" value="0"></div>
+      <button class="btn" onclick="addProducto()">Agregar</button>
+    </div>`;
+  m.appendChild(p);
+  const list=panel('Catálogo');
+  const rows=db.productos.map(pr=>{
+    const cat=byId(db.categorias,pr.categoria), marca=byId(db.marcas,pr.marca);
+    const low=pr.stock<=pr.stock_min;
+    return `<tr><td>${pr.nombre}</td><td><div class="catcell">${catIcon(cat?cat.nombre:'')}<span class="small">${cat?cat.nombre:''} · ${marca?marca.nombre:''}</span></div></td><td>${money(pr.precio)}</td>
+      <td><span class="pill ${low?'low':''}">${pr.stock} u.</span></td>
+      <td>${pr.activo?'Activo':'Inactivo'}</td>
+      <td><a class="link" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</a></td></tr>`;
+  }).join('');
+  list.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Categoría/Marca</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th></tr>${rows}</table></div>`;
+  m.appendChild(list);
+}
+function addProducto(){
+  const nombre=document.getElementById('pf-nombre').value.trim();
+  if(!nombre){ alert('Ingresá un nombre de producto.'); return; }
+  db.productos.push({
+    id:nid('prod'), nombre,
+    categoria:Number(document.getElementById('pf-cat').value),
+    marca:Number(document.getElementById('pf-marca').value),
+    precio:Number(document.getElementById('pf-precio').value)||0,
+    stock:Number(document.getElementById('pf-stock').value)||0,
+    stock_min:Number(document.getElementById('pf-min').value)||0,
+    activo:true
+  });
+  save(); render();
+}
+function toggleProducto(id){ const pr=byId(db.productos,id); pr.activo=!pr.activo; save(); render(); }
+
+// ---------- GENTE (clientes y vendedores) ----------
+function renderGente(m){
+  const p1=panel('Nuevo cliente');
+  p1.innerHTML+=`<div class="row">
+    <div class="field"><label>Nombre y apellido</label><input id="cf-nombre"></div>
+    <div class="field"><label>Teléfono</label><input id="cf-tel"></div>
+    <button class="btn" onclick="addCliente()">Agregar</button></div>`;
+  m.appendChild(p1);
+  const l1=panel('Clientes');
+  l1.innerHTML+=`<div class="tablewrap"><table><tr><th>Nombre</th><th>Teléfono</th></tr>
+    ${db.clientes.map(c=>`<tr><td>${c.nombre}</td><td>${c.telefono||'-'}</td></tr>`).join('') || '<tr><td colspan="2" class="small">Sin clientes cargados.</td></tr>'}</table></div>`;
+  m.appendChild(l1);
+
+  const p2=panel('Nuevo vendedor');
+  p2.innerHTML+=`<div class="row">
+    <div class="field"><label>Nombre y apellido</label><input id="vf-nombre"></div>
+    <div class="field"><label>Zona</label><select id="vf-zona">${db.zonas.map(z=>`<option value="${z.id}">${z.nombre}</option>`).join('')}</select></div>
+    <div class="field"><label>% Comisión</label><input id="vf-com" type="number" min="0" max="100" value="10"></div>
+    <button class="btn" onclick="addVendedor()">Agregar</button></div>`;
+  m.appendChild(p2);
+  const l2=panel('Vendedores');
+  l2.innerHTML+=`<div class="tablewrap"><table><tr><th>Nombre</th><th>Zona</th><th>Comisión</th></tr>
+    ${db.vendedores.map(v=>`<tr><td>${v.nombre}</td><td>${byId(db.zonas,v.zona)?.nombre||''}</td><td>${v.comision}%</td></tr>`).join('') || '<tr><td colspan="3" class="small">Sin vendedores cargados.</td></tr>'}</table></div>`;
+  m.appendChild(l2);
+}
+function addCliente(){
+  const nombre=document.getElementById('cf-nombre').value.trim();
+  if(!nombre){ alert('Ingresá el nombre del cliente.'); return; }
+  db.clientes.push({id:nid('cli'), nombre, telefono:document.getElementById('cf-tel').value.trim()});
+  save(); render();
+}
+function addVendedor(){
+  const nombre=document.getElementById('vf-nombre').value.trim();
+  if(!nombre){ alert('Ingresá el nombre del vendedor.'); return; }
+  db.vendedores.push({id:nid('vend'), nombre, zona:Number(document.getElementById('vf-zona').value), comision:Number(document.getElementById('vf-com').value)||0});
+  save(); render();
+}
+
+// ---------- CATALOGOS (zonas, proveedores, categorías, marcas) ----------
+function simpleCrud(m, title, arr, fields){
+  const p=panel(title);
+  const inputs=fields.map(f=>`<div class="field"><label>${f.label}</label><input id="sc-${title}-${f.key}"></div>`).join('');
+  p.innerHTML+=`<div class="row">${inputs}<button class="btn" onclick="addSimple('${title}')">Agregar</button></div>
+    <div class="tablewrap"><table><tr>${fields.map(f=>`<th>${f.label}</th>`).join('')}</tr>
+    ${arr.map(x=>`<tr>${fields.map(f=>`<td>${x[f.key]||'-'}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${fields.length}" class="small">Sin registros.</td></tr>`}</table></div>`;
+  m.appendChild(p);
+}
+const SIMPLE_MAP={};
+function renderCatalogos(m){
+  SIMPLE_MAP['Zonas']={arr:db.zonas, seq:'zona', fields:[{key:'nombre',label:'Nombre'}]};
+  SIMPLE_MAP['Proveedores']={arr:db.proveedores, seq:'prov', fields:[{key:'nombre',label:'Nombre'},{key:'telefono',label:'Teléfono'}]};
+  SIMPLE_MAP['Categorías']={arr:db.categorias, seq:'cat', fields:[{key:'nombre',label:'Nombre'}]};
+  SIMPLE_MAP['Marcas']={arr:db.marcas, seq:'marca', fields:[{key:'nombre',label:'Nombre'}]};
+  simpleCrud(m,'Zonas',db.zonas,SIMPLE_MAP['Zonas'].fields);
+  simpleCrud(m,'Proveedores',db.proveedores,SIMPLE_MAP['Proveedores'].fields);
+  simpleCrud(m,'Categorías',db.categorias,SIMPLE_MAP['Categorías'].fields);
+  simpleCrud(m,'Marcas',db.marcas,SIMPLE_MAP['Marcas'].fields);
+}
+function addSimple(title){
+  const conf=SIMPLE_MAP[title];
+  const obj={id:nid(conf.seq)};
+  let ok=true;
+  conf.fields.forEach(f=>{ const v=document.getElementById(`sc-${title}-${f.key}`).value.trim(); if(f.key==='nombre' && !v) ok=false; obj[f.key]=v; });
+  if(!ok){ alert('Ingresá al menos el nombre.'); return; }
+  conf.arr.push(obj); save(); render();
+}
+
+// ---------- VENTAS ----------
+let ventaLineas=[];
+function renderVentas(m){
+  const p=panel('Registrar venta');
+  p.innerHTML+=`<div class="row">
+    <div class="field"><label>Vendedor</label><select id="vt-vend">${db.vendedores.map(v=>`<option value="${v.id}">${v.nombre}</option>`).join('') || '<option value="">Cargá un vendedor primero</option>'}</select></div>
+    <div class="field"><label>Cliente (opcional)</label><select id="vt-cli"><option value="">Consumidor final</option>${db.clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div class="field"><label>Producto</label><select id="vt-prod">${db.productos.filter(p=>p.activo).map(p=>`<option value="${p.id}">${p.nombre} (stock ${p.stock})</option>`).join('')}</select></div>
+    <div class="field"><label>Cantidad</label><input id="vt-cant" type="number" min="1" value="1"></div>
+    <button class="btn ghost" onclick="addLineaVenta()">Agregar línea</button>
+  </div>
+  <div id="vt-lineas" style="margin-top:10px"></div>
+  <div class="row" style="margin-top:10px"><button class="btn" onclick="confirmarVenta()">Registrar venta</button></div>`;
+  m.appendChild(p);
+  pintarLineasVenta();
+  const hist=panel('Historial de ventas');
+  hist.innerHTML+=`<div class="tablewrap"><table><tr><th>#</th><th>Vendedor</th><th>Cliente</th><th>Total</th><th>Comisión</th></tr>
+  ${db.ventas.slice().reverse().map(v=>`<tr><td>${v.id}</td><td>${byId(db.vendedores,v.vendedor)?.nombre||'-'}</td><td>${byId(db.clientes,v.cliente)?.nombre||'Consumidor final'}</td><td>${money(v.total)}</td><td>${money(v.comision_monto)}</td></tr>`).join('') || '<tr><td colspan="5" class="small">Sin ventas.</td></tr>'}</table></div>`;
+  m.appendChild(hist);
+}
+function pintarLineasVenta(){
+  const box=document.getElementById('vt-lineas');
+  if(!box) return;
+  if(!ventaLineas.length){ box.innerHTML='<div class="small">Todavía no agregaste productos a esta venta.</div>'; return; }
+  box.innerHTML=ventaLineas.map((l,i)=>{
+    const pr=byId(db.productos,l.producto);
+    return `<div class="detail-row">${pr.nombre} × ${l.cantidad} — ${money(pr.precio*l.cantidad)} <a class="link" onclick="quitarLineaVenta(${i})">Quitar</a></div>`;
+  }).join('');
+}
+function addLineaVenta(){
+  const prodId=Number(document.getElementById('vt-prod').value);
+  const cant=Number(document.getElementById('vt-cant').value)||0;
+  const pr=byId(db.productos,prodId);
+  if(!pr || cant<=0){ alert('Elegí un producto y una cantidad válida.'); return; }
+  const yaEnCarrito=ventaLineas.filter(l=>l.producto===prodId).reduce((s,l)=>s+l.cantidad,0);
+  if(yaEnCarrito+cant>pr.stock){ alert(`No hay stock suficiente de ${pr.nombre}. Disponible: ${pr.stock}.`); return; }
+  ventaLineas.push({producto:prodId, cantidad:cant});
+  pintarLineasVenta();
+}
+function quitarLineaVenta(i){ ventaLineas.splice(i,1); pintarLineasVenta(); }
+function confirmarVenta(){
+  const vendId=Number(document.getElementById('vt-vend').value);
+  const vend=byId(db.vendedores,vendId);
+  if(!vend){ alert('Cargá un vendedor antes de registrar la venta.'); return; }
+  if(!ventaLineas.length){ alert('Agregá al menos un producto.'); return; }
+  const cliVal=document.getElementById('vt-cli').value;
+  let total=0;
+  const detalle=ventaLineas.map(l=>{
+    const pr=byId(db.productos,l.producto);
+    const subtotal=pr.precio*l.cantidad;
+    total+=subtotal;
+    return {producto:pr.id, cantidad:l.cantidad, precio_unitario:pr.precio, subtotal};
+  });
+  detalle.forEach(d=>{ byId(db.productos,d.producto).stock-=d.cantidad; });
+  const comision_monto=Math.round(total*(vend.comision/100));
+  db.ventas.push({id:nid('venta'), vendedor:vendId, cliente:cliVal?Number(cliVal):null, fecha:new Date().toISOString(), detalle, total, comision_pct:vend.comision, comision_monto});
+  ventaLineas=[]; save(); render();
+}
+
+// ---------- COMPRAS ----------
+let compraLineas=[];
+function renderCompras(m){
+  const p=panel('Registrar compra');
+  p.innerHTML+=`<div class="row">
+    <div class="field"><label>Proveedor</label><select id="cp-prov">${db.proveedores.map(pv=>`<option value="${pv.id}">${pv.nombre}</option>`).join('') || '<option value="">Cargá un proveedor primero</option>'}</select></div>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div class="field"><label>Producto</label><select id="cp-prod">${db.productos.map(p=>`<option value="${p.id}">${p.nombre}</option>`).join('')}</select></div>
+    <div class="field"><label>Cantidad</label><input id="cp-cant" type="number" min="1" value="1"></div>
+    <div class="field"><label>Precio unitario</label><input id="cp-precio" type="number" min="0"></div>
+    <button class="btn ghost" onclick="addLineaCompra()">Agregar línea</button>
+  </div>
+  <div id="cp-lineas" style="margin-top:10px"></div>
+  <div class="row" style="margin-top:10px"><button class="btn" onclick="confirmarCompra()">Registrar compra</button></div>`;
+  m.appendChild(p);
+  pintarLineasCompra();
+  const hist=panel('Historial de compras');
+  hist.innerHTML+=`<div class="tablewrap"><table><tr><th>#</th><th>Proveedor</th><th>Total</th></tr>
+  ${db.compras.slice().reverse().map(c=>`<tr><td>${c.id}</td><td>${byId(db.proveedores,c.proveedor)?.nombre||'-'}</td><td>${money(c.total)}</td></tr>`).join('') || '<tr><td colspan="3" class="small">Sin compras.</td></tr>'}</table></div>`;
+  m.appendChild(hist);
+}
+function pintarLineasCompra(){
+  const box=document.getElementById('cp-lineas');
+  if(!box) return;
+  if(!compraLineas.length){ box.innerHTML='<div class="small">Todavía no agregaste productos a esta compra.</div>'; return; }
+  box.innerHTML=compraLineas.map((l,i)=>{
+    const pr=byId(db.productos,l.producto);
+    return `<div class="detail-row">${pr.nombre} × ${l.cantidad} — ${money(l.precio*l.cantidad)} <a class="link" onclick="quitarLineaCompra(${i})">Quitar</a></div>`;
+  }).join('');
+}
+function addLineaCompra(){
+  const prodId=Number(document.getElementById('cp-prod').value);
+  const cant=Number(document.getElementById('cp-cant').value)||0;
+  const precio=Number(document.getElementById('cp-precio').value)||0;
+  if(!prodId || cant<=0){ alert('Elegí un producto y una cantidad válida.'); return; }
+  compraLineas.push({producto:prodId, cantidad:cant, precio});
+  pintarLineasCompra();
+}
+function quitarLineaCompra(i){ compraLineas.splice(i,1); pintarLineasCompra(); }
+function confirmarCompra(){
+  const provId=Number(document.getElementById('cp-prov').value);
+  if(!provId){ alert('Cargá un proveedor antes de registrar la compra.'); return; }
+  if(!compraLineas.length){ alert('Agregá al menos un producto.'); return; }
+  let total=0;
+  const detalle=compraLineas.map(l=>{ const subtotal=l.precio*l.cantidad; total+=subtotal; return {producto:l.producto, cantidad:l.cantidad, precio_unitario:l.precio, subtotal}; });
+  detalle.forEach(d=>{ byId(db.productos,d.producto).stock+=d.cantidad; });
+  db.compras.push({id:nid('compra'), proveedor:provId, fecha:new Date().toISOString(), detalle, total});
+  compraLineas=[]; save(); render();
+}
+
+// ---------- REPORTES ----------
+function renderReportes(m){
+  const bajos=db.productos.filter(p=>p.activo && p.stock<=p.stock_min);
+  const p1=panel('Stock bajo mínimo');
+  p1.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Stock</th><th>Mínimo</th></tr>
+  ${bajos.map(p=>`<tr><td>${p.nombre}</td><td>${p.stock}</td><td>${p.stock_min}</td></tr>`).join('') || '<tr><td colspan="3" class="small">Ningún producto por debajo del mínimo.</td></tr>'}</table></div>`;
+  m.appendChild(p1);
+
+  const porVend={};
+  db.ventas.forEach(v=>{ porVend[v.vendedor]=porVend[v.vendedor]||{total:0,comision:0}; porVend[v.vendedor].total+=v.total; porVend[v.vendedor].comision+=v.comision_monto; });
+  const p2=panel('Ventas y comisiones por vendedor');
+  p2.innerHTML+=`<div class="tablewrap"><table><tr><th>Vendedor</th><th>Total vendido</th><th>Comisión</th></tr>
+  ${Object.keys(porVend).map(id=>`<tr><td>${byId(db.vendedores,id)?.nombre||'-'}</td><td>${money(porVend[id].total)}</td><td>${money(porVend[id].comision)}</td></tr>`).join('') || '<tr><td colspan="3" class="small">Sin ventas registradas todavía.</td></tr>'}</table></div>`;
+  m.appendChild(p2);
+
+  const unidades={};
+  db.ventas.forEach(v=>v.detalle.forEach(d=>{ unidades[d.producto]=(unidades[d.producto]||0)+d.cantidad; }));
+  const ranking=Object.entries(unidades).sort((a,b)=>b[1]-a[1]);
+  const p3=panel('Productos más vendidos');
+  p3.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Unidades vendidas</th></tr>
+  ${ranking.map(([id,u])=>`<tr><td>${byId(db.productos,id)?.nombre||'-'}</td><td>${u}</td></tr>`).join('') || '<tr><td colspan="2" class="small">Sin ventas registradas todavía.</td></tr>'}</table></div>`;
+  m.appendChild(p3);
+}
+
+render();
+</script>
+</body>
+</html>
