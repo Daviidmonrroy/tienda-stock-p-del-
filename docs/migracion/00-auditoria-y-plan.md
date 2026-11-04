@@ -159,7 +159,9 @@ El proyecto nuevo va en `02-proyecto-python-streamlit/`. El trabajo anterior que
 | `st.session_state` | Usuario logueado y formularios | Para datos permanentes: eso va en MySQL |
 | Persistencia al recargar | Ver riesgo 2 | |
 | Multitenant y `user_id` | Ver sección 4.1 | |
-| ANSI-SPARC | Físico: tablas MySQL. Conceptual: modelos ORM. Externo: lo que ve cada rol en las vistas | |
+| Regex de color hexadecimal `^#[0-9a-fA-F]{6}$` | Campo `color_hex` de las variantes | |
+| Relación 1 a 1 y `flush()` en el registro | Al registrar un usuario se crea su perfil en la misma transacción (ver sección 10) | |
+| ANSI-SPARC | Físico: el servidor MySQL. Conceptual: el esquema SQL (tablas y relaciones), que el ORM representa. Aplicación: lo que ve cada rol en las vistas de Streamlit | |
 
 ### 4.1 Multitenant: una decisión que hay que tomar
 
@@ -237,6 +239,21 @@ Al cerrar cada etapa: archivos creados, qué hace cada uno, conceptos de clase u
 ## 9. Preguntas que necesito que respondas antes de empezar
 
 1. ¿Podés ejecutar Python, Streamlit y MySQL en tu computadora (o con Docker) para correr las pruebas y pasarme la salida?
-2. ¿Qué entiende tu profesor por multitenant: aislamiento por `user_id` como propongo, o un modelo con varios negocios?
+2. (Resuelta por el temario de la clase del 29/10) Multitenant es aislamiento por `user_id` en una misma base de datos.
 3. ¿Aceptás que la app necesite conexión (sin modo sin conexión)?
 4. (Resuelta) El proyecto nuevo va en una carpeta aparte y el anterior quedó intacto en otra.
+
+## 10. Contraste con el temario de octubre (13, 15, 20, 22, 27 y 29)
+
+Contrastado el 04/11/2026 contra el resumen de clases que pasó un compañero. Es información de segunda mano: conviene confirmarla con los apuntes o el profesor.
+
+| Clase | Contenido | Estado en el plan |
+|---|---|---|
+| 13/10 | bcrypt, `hash_password`, `verify_password`, `DeclarativeBase`, `sessionmaker`, conexión MySQL | Cubierto |
+| 15/10 | `getpass`, `strip`, `lower`, excepciones propias, `raise` y `SystemExit`, `st.session_state`, `__main__` | Cubierto |
+| 20/10 | `session_state` frente a variables normales, `dataclass(frozen=True)`, `echo=True`, `finally` y `close()` | Cubierto. Se agrega una demostración corta de por qué un diccionario normal se reinicia en cada ejecución |
+| 22/10 | `Decimal`, regex de color hexadecimal, `UniqueConstraint` con `__table_args__`, `slots=True` | **Ajuste:** el regex de color no tenía lugar en el modelo. Se agrega `color_hex` a las variantes |
+| 27/10 | `flush()` para obtener el id y crear el perfil, `text()` para actualizar contadores | **Ajuste:** faltaba el perfil de usuario (relación 1 a 1). Se agrega `perfiles_usuario`. El contador `intentos_fallidos` se actualiza con `text()` |
+| 29/10 | Multitenant por `user_id`, ANSI-SPARC, validación de longitudes y email, `IntegrityError` | **Ajuste:** la definición de la clase coincide con la propuesta de la sección 4.1. Se corrigió el mapeo de ANSI-SPARC y se agrega validación del dominio del email |
+
+Aclaración sobre la sesión: según el resumen de la clase del 20/10, `st.session_state` conserva los datos entre ejecuciones del script (cada clic). Eso es distinto de recargar el navegador con F5, que abre una sesión nueva. El riesgo 2 pasa a ser opcional, a menos que el profesor pida lo segundo.
