@@ -1,0 +1,18 @@
+# MySQL 8 para desarrollo. Los valores salen del archivo .env.
+services:
+  mysql:
+    image: mysql:8
+    container_name: vibra_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - vibra_mysql_datos:/var/lib/mysql
+volumes:
+  vibra_mysql_datos:

@@ -1,0 +1,7 @@
+# Dependencias de la migración. Sin versiones fijadas todavía: se fijan después de la primera instalación exitosa.
+streamlit
+sqlalchemy>=2.0
+pymysql
+bcrypt
+python-dotenv
+pytest

@@ -12,7 +12,7 @@ test/         Pruebas automáticas (`npm test`).
 
 ## Probar
 ```
-cd server
+cd 01-proyecto-original-node/servidor-node
 npm test
 JWT_SECRET=un-texto-largo-y-aleatorio DEMO_CLAVE=una-clave npm start
 ```
@@ -31,4 +31,4 @@ Precio dentro de [mínimo, máximo]; stock suficiente; el vendedor vende solo de
 comisión solo en ventas de vendedores; fiado exige cliente; el costo se congela en cada venta; token falsificado o vencido rechazado.
 
 ## Pendiente
-Adaptador MySQL (usa `db/schema.sql`), compras, asignaciones, devoluciones, liquidación mensual, gastos y panel del dueño.
+Adaptador MySQL (usa `../base-de-datos/schema.sql`), compras, asignaciones, devoluciones, liquidación mensual, gastos y panel del dueño.

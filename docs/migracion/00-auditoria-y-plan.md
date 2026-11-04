@@ -8,9 +8,9 @@ Se revisó el repositorio completo (el ZIP original equivale a este repositorio)
 
 | Qué | Resultado verificado |
 |---|---|
-| `npm test` en `server/` | 19 pruebas, 19 pasan (ejecutado el 04/11/2026) |
-| `db/schema.sql` contra MySQL | **No se pudo ejecutar**: en el entorno de trabajo no hay MySQL ni el servicio de Docker |
-| Prototipo `prototype/index.html` | Revisado leyendo el código. No se probó con un navegador en esta auditoría |
+| `npm test` en `01-proyecto-original-node/servidor-node/` | 19 pruebas, 19 pasan (ejecutado el 04/11/2026) |
+| `01-proyecto-original-node/base-de-datos/schema.sql` contra MySQL | **No se pudo ejecutar**: en el entorno de trabajo no hay MySQL ni el servicio de Docker |
+| Prototipo `01-proyecto-original-node/prototipo-web/index.html` | Revisado leyendo el código. No se probó con un navegador en esta auditoría |
 | Python, Streamlit, SQLAlchemy, bcrypt | **No están instalados y no se pueden instalar** en el entorno de trabajo (sin acceso a los paquetes). Sí hay Python 3.13 y pytest |
 
 ## 1. Diagnóstico del proyecto original
@@ -19,9 +19,9 @@ El repositorio tiene tres piezas que no están conectadas entre sí:
 
 | Pieza | Tamaño | Estado real |
 |---|---|---|
-| `prototype/index.html` | 418 líneas | Demo de una página. Guarda en el navegador (localStorage) |
-| `server/` (Node) | ~250 líneas + 19 pruebas | Reglas de venta y login que funcionan, pero con datos **en memoria** |
-| `db/schema.sql` | 24 tablas y 1 vista | Diseño completo, **nunca ejecutado** en un MySQL |
+| `01-proyecto-original-node/prototipo-web/index.html` | 418 líneas | Demo de una página. Guarda en el navegador (localStorage) |
+| `01-proyecto-original-node/servidor-node/` (Node) | ~250 líneas + 19 pruebas | Reglas de venta y login que funcionan, pero con datos **en memoria** |
+| `01-proyecto-original-node/base-de-datos/schema.sql` | 24 tablas y 1 vista | Diseño completo, **nunca ejecutado** en un MySQL |
 
 La base de datos y el servidor nunca se conectaron: el servidor no habla con MySQL.
 
@@ -29,7 +29,7 @@ La base de datos y el servidor nunca se conectaron: el servidor no habla con MyS
 
 | # | Punto | Hallazgo |
 |---|---|---|
-| 1 | Estructura | Ordenada (`prototype/`, `server/`, `db/`, `docs/`, `brand/`). `app/` está vacía |
+| 1 | Estructura | Ordenada (`01-proyecto-original-node/prototipo-web/`, `01-proyecto-original-node/servidor-node/`, `01-proyecto-original-node/base-de-datos/`, `docs/`, `brand/`). La carpeta `app/` estaba vacía |
 | 2 | Código del servidor | Capas separadas (dominio, auth, almacén, http). Sin dependencias externas. Solo 4 rutas: login, productos, stock, ventas |
 | 3 | Reglas de negocio | Implementadas y probadas: precio dentro de [mínimo, máximo], stock suficiente, fiado exige cliente, comisión solo en ventas de vendedores, costo congelado en cada venta |
 | 4 | Modelo de datos | Diseño sólido (ver sección 6). Faltan descuentos, estado de pago y algunas restricciones UNIQUE |
@@ -73,7 +73,7 @@ La base de datos y el servidor nunca se conectaron: el servidor no habla con MyS
 
 **Conservar (se porta a Python):**
 - El modelo de datos: libro de movimientos de stock, stock por ubicación, costo y precio mínimo congelados en cada venta.
-- Las reglas de negocio de `server/src/domain/` y las 19 pruebas, que pasan a ser las pruebas en `pytest`.
+- Las reglas de negocio de `01-proyecto-original-node/servidor-node/src/domain/` y las 19 pruebas, que pasan a ser las pruebas en `pytest`.
 - Las decisiones del dueño (`docs/negocio/`).
 - La identidad visual: colores, logos, íconos y manual de marca.
 
@@ -133,7 +133,7 @@ vibra_deportiva/
 └── tests/
 ```
 
-El proyecto nuevo va en una carpeta nueva del mismo repositorio. El Node y el prototipo se mueven a `legacy/` sin borrarse.
+El proyecto nuevo va en `02-proyecto-python-streamlit/`. El trabajo anterior quedó completo en `01-proyecto-original-node/`, sin borrar nada.
 
 ## 4. Dónde aplica cada contenido de la cursada
 
@@ -239,4 +239,4 @@ Al cerrar cada etapa: archivos creados, qué hace cada uno, conceptos de clase u
 1. ¿Podés ejecutar Python, Streamlit y MySQL en tu computadora (o con Docker) para correr las pruebas y pasarme la salida?
 2. ¿Qué entiende tu profesor por multitenant: aislamiento por `user_id` como propongo, o un modelo con varios negocios?
 3. ¿Aceptás que la app necesite conexión (sin modo sin conexión)?
-4. ¿Armo el proyecto nuevo en una carpeta nueva del mismo repositorio y paso lo actual a `legacy/`?
+4. (Resuelta) El proyecto nuevo va en una carpeta aparte y el anterior quedó intacto en otra.
