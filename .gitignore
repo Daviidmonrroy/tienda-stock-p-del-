@@ -6,3 +6,7 @@ node_modules/
 *.sql.gz
 backups/
 .DS_Store
+__pycache__/
+.pytest_cache/
+.venv/
+.streamlit/secrets.toml

@@ -10,9 +10,9 @@ vendedores por zona, comisiones y panel de resúmenes para el dueño.
 | Carpeta | Contenido |
 |---|---|
 | `01-proyecto-original-node/` | Primera versión (Node + HTML + diseño MySQL). Quedó completa, sin cambios de código. |
-| `02-proyecto-python-streamlit/` | Migración a Python, Streamlit, MySQL, SQLAlchemy y bcrypt para la cursada. **Proyecto activo.** |
+| `02-proyecto-python-streamlit/` | Migración a Python, Streamlit, MySQL, SQLAlchemy y bcrypt para la cursada. **Proyecto activo.** Etapas 3 a 5 escritas, pendientes de probar con todo instalado. |
 | `docs/negocio/` | Respuestas del dueño y preguntas abiertas. |
-| `docs/migracion/` | Auditoría del proyecto original y plan de migración por etapas. |
+| `docs/migracion/` | Auditoría, plan de migración por etapas e informes de cada etapa. |
 | `docs/marca/` | Manual de marca (PDF). |
 | `brand/` | Logos, avatar, íconos y favicon en SVG y PNG. |
 

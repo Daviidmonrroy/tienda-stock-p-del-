@@ -1,0 +1,10 @@
+# Tema con los colores de la marca Vibra Deportiva.
+[theme]
+primaryColor = "#D12E2B"
+backgroundColor = "#F3F1F2"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#0B1015"
+font = "sans serif"
+
+[server]
+headless = true
