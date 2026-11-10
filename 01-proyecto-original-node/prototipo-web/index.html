@@ -81,6 +81,27 @@ button.btn.toggle:hover{background:var(--court);color:#fff;border-color:var(--co
 nav button:hover{color:#fff;background:rgba(255,255,255,.06)}
 nav button.active{color:#fff;border-bottom-color:var(--accent)}
 
+
+.sale-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:22px;align-items:start}
+.sale-entry{min-width:0;padding:4px}
+.sale-cart{position:sticky;top:230px;background:rgba(11,16,21,.28);border:1px solid var(--line);border-radius:10px;padding:16px}
+.cart-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
+.cart-heading h3{font-size:.95rem;margin:0}
+.cart-lines{min-height:104px}
+.cart-empty{text-align:center;padding:25px 8px;color:var(--muted);font-size:.82rem;line-height:1.7}
+.cart-empty span{font-size:.72rem}
+.cart-item{display:grid;grid-template-columns:minmax(0,1fr) auto 28px;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.cart-product{display:grid;gap:4px;min-width:0}
+.cart-product strong{font-size:.78rem;overflow:hidden;text-overflow:ellipsis}
+.cart-product span{font-size:.69rem;color:var(--muted)}
+.cart-price{font-size:.78rem;font-weight:700}
+.cart-remove{background:none;border:0;border-radius:5px;color:var(--danger-ink);font-size:1.15rem;padding:3px 7px}
+.cart-remove:hover{background:rgba(240,58,55,.12)}
+.cart-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-size:.82rem}
+.cart-total strong{font-size:1.15rem}
+.cart-submit{width:100%}
+@media(max-width:720px){.sale-layout{grid-template-columns:1fr}.sale-cart{position:static}.sale-entry{padding:0}}
+
 </style>
 </head>
 <body>
@@ -296,17 +317,26 @@ function addSimple(title){
 let ventaLineas=[];
 function renderVentas(m){
   const p=panel('Registrar venta');
-  p.innerHTML+=`<div class="row">
-    <div class="field"><label>Vendedor</label><select id="vt-vend">${db.vendedores.map(v=>`<option value="${v.id}">${v.nombre}</option>`).join('') || '<option value="">Cargá un vendedor primero</option>'}</select></div>
-    <div class="field"><label>Cliente (opcional)</label><select id="vt-cli"><option value="">Consumidor final</option>${db.clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
-  </div>
-  <div class="row" style="margin-top:10px">
-    <div class="field"><label>Producto</label><select id="vt-prod">${db.productos.filter(p=>p.activo).map(p=>`<option value="${p.id}">${p.nombre} (stock ${p.stock})</option>`).join('')}</select></div>
-    <div class="field"><label>Cantidad</label><input id="vt-cant" type="number" min="1" value="1"></div>
-    <button class="btn ghost" onclick="addLineaVenta()">Agregar línea</button>
-  </div>
-  <div id="vt-lineas" style="margin-top:10px"></div>
-  <div class="row" style="margin-top:10px"><button class="btn" onclick="confirmarVenta()">Registrar venta</button></div>`;
+  p.innerHTML+=`<div class="sale-layout">
+    <div class="sale-entry">
+      <div class="row">
+        <div class="field"><label>Vendedor</label><select id="vt-vend">${db.vendedores.map(v=>`<option value="${v.id}">${v.nombre}</option>`).join('') || '<option value="">Cargá un vendedor primero</option>'}</select></div>
+        <div class="field"><label>Cliente (opcional)</label><select id="vt-cli"><option value="">Consumidor final</option>${db.clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
+      </div>
+      <div class="row" style="margin-top:16px">
+        <div class="field"><label>Producto</label><select id="vt-prod">${db.productos.filter(p=>p.activo).map(p=>`<option value="${p.id}">${p.nombre} (stock ${p.stock})</option>`).join('')}</select></div>
+        <div class="field" style="max-width:130px"><label>Cantidad</label><input id="vt-cant" type="number" min="1" value="1"></div>
+        <button class="btn ghost" onclick="addLineaVenta()">＋ Agregar producto</button>
+      </div>
+      <p class="small" style="margin-top:18px">Seleccioná productos y cantidades. El stock se descuenta al registrar la venta.</p>
+    </div>
+    <aside class="sale-cart">
+      <div class="cart-heading"><h3>Tu carrito</h3><span id="vt-count" class="pill">0 productos</span></div>
+      <div id="vt-lineas" class="cart-lines"></div>
+      <div class="cart-total"><span>Total</span><strong id="vt-total">$0</strong></div>
+      <button class="btn cart-submit" onclick="confirmarVenta()">Registrar venta</button>
+    </aside>
+  </div>`;
   m.appendChild(p);
   pintarLineasVenta();
   const hist=panel('Historial de ventas');
@@ -317,10 +347,14 @@ function renderVentas(m){
 function pintarLineasVenta(){
   const box=document.getElementById('vt-lineas');
   if(!box) return;
-  if(!ventaLineas.length){ box.innerHTML='<div class="small">Todavía no agregaste productos a esta venta.</div>'; return; }
+  const count=ventaLineas.reduce((sum,l)=>sum+l.cantidad,0);
+  document.getElementById('vt-count').textContent=`${count} ${count===1?'producto':'productos'}`;
+  const total=ventaLineas.reduce((sum,l)=>sum+byId(db.productos,l.producto).precio*l.cantidad,0);
+  document.getElementById('vt-total').textContent=money(total);
+  if(!ventaLineas.length){ box.innerHTML='<div class="cart-empty">Tu carrito está vacío.<br><span>Agregá productos para comenzar.</span></div>'; return; }
   box.innerHTML=ventaLineas.map((l,i)=>{
     const pr=byId(db.productos,l.producto);
-    return `<div class="detail-row">${pr.nombre} × ${l.cantidad} — ${money(pr.precio*l.cantidad)} <a class="link" onclick="quitarLineaVenta(${i})">Quitar</a></div>`;
+    return `<div class="cart-item"><div class="cart-product"><strong>${pr.nombre}</strong><span>${l.cantidad} × ${money(pr.precio)}</span></div><div class="cart-price">${money(pr.precio*l.cantidad)}</div><button type="button" class="cart-remove" aria-label="Quitar ${pr.nombre}" onclick="quitarLineaVenta(${i})">×</button></div>`;
   }).join('');
 }
 function addLineaVenta(){
