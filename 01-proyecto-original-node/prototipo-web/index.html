@@ -75,6 +75,12 @@ button.btn.ghost{box-shadow:none}
 a.link{display:inline-flex;align-items:center;text-decoration:none;padding:6px 10px;border:1px solid rgba(240,58,55,.35);border-radius:6px;background:rgba(240,58,55,.1);font-weight:600;transition:background .18s ease,border-color .18s ease}
 a.link:hover{background:rgba(240,58,55,.2);border-color:var(--accent)}
 
+
+button.btn.toggle{background:transparent;color:var(--link);border:1px solid rgba(240,58,55,.4);padding:6px 11px;font-size:.78rem;box-shadow:none}
+button.btn.toggle:hover{background:var(--court);color:#fff;border-color:var(--court);box-shadow:0 4px 12px rgba(209,46,43,.2)}
+nav button:hover{color:#fff;background:rgba(255,255,255,.06)}
+nav button.active{color:#fff;border-bottom-color:var(--accent)}
+
 </style>
 </head>
 <body>
@@ -198,7 +204,7 @@ function renderProductos(m){
     return `<tr><td>${pr.nombre}</td><td><div class="catcell">${catIcon(cat?cat.nombre:'')}<span class="small">${cat?cat.nombre:''} · ${marca?marca.nombre:''}</span></div></td><td>${money(pr.precio)}</td>
       <td><span class="pill ${low?'low':''}">${pr.stock} u.</span></td>
       <td>${pr.activo?'Activo':'Inactivo'}</td>
-      <td><a class="link" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</a></td></tr>`;
+      <td><button type="button" class="btn toggle" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</button></td></tr>`;
   }).join('');
   list.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Categoría/Marca</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th></tr>${rows}</table></div>`;
   m.appendChild(list);
