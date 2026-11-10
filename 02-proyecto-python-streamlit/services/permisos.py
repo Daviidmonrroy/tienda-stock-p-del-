@@ -2,7 +2,7 @@
 from utils.excepciones import PermisoDenegado
 
 _TODOS = frozenset({
-    "usuarios.gestionar", "catalogo.ver", "catalogo.editar", "costos.ver", "clientes.gestionar",
+    "usuarios.gestionar", "ubicaciones.gestionar", "ventas.anular", "catalogo.ver", "catalogo.editar", "costos.ver", "clientes.gestionar",
     "stock.ver_propio", "stock.ver_todo", "stock.ajustar", "compras.registrar",
     "ventas.registrar", "ventas.ver_propias", "ventas.ver_todas",
     "comisiones.ver_propias", "comisiones.liquidar", "reportes.ver", "gastos.gestionar",

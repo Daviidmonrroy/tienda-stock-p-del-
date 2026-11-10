@@ -82,3 +82,44 @@ def validar_telefono(valor: str | None) -> str | None:
     if not _TELEFONO.fullmatch(valor):
         raise ErrorDeValidacion("teléfono", "Teléfono: entre 6 y 20 caracteres (números, espacios, + ( ) -).")
     return valor
+
+
+# ---------- catálogo, stock y dinero ----------
+from decimal import Decimal  # noqa: E402
+
+from utils import dinero  # noqa: E402
+
+_SKU = re.compile(r"^[A-Z0-9][A-Z0-9-]{2,39}$")
+MONTO_MAXIMO = Decimal("9999999999.99")
+
+
+def validar_texto_corto(valor: str | None, campo: str, minimo: int = 2, maximo: int = 80) -> str:
+    return validar_longitud(limpiar_texto(valor), campo, minimo, maximo)
+
+
+def validar_sku(valor: str | None) -> str:
+    """Código de variante: mayúsculas, números y guiones, entre 3 y 40 caracteres."""
+    sku = limpiar_texto(valor).upper()
+    if not _SKU.fullmatch(sku):
+        raise ErrorDeValidacion("sku", "Código: 3 a 40 caracteres, solo letras, números y guiones (ej. PAL-CTRL-01).")
+    return sku
+
+
+def validar_cantidad(valor: object, campo: str = "cantidad") -> int:
+    """Entero mayor que cero. Rechaza decimales y booleanos."""
+    if isinstance(valor, bool) or not isinstance(valor, int) or valor <= 0:
+        raise ErrorDeValidacion(campo, f"{campo.capitalize()}: tiene que ser un número entero mayor que cero.")
+    return valor
+
+
+def validar_monto(valor: object, campo: str, permitir_cero: bool = False) -> Decimal:
+    """Convierte a Decimal y exige un monto positivo con hasta 2 decimales."""
+    try:
+        monto = dinero.a_decimal(valor)  # type: ignore[arg-type]
+    except (TypeError, ValueError) as error:
+        raise ErrorDeValidacion(campo, f"{campo.capitalize()}: monto inválido.") from error
+    if monto != dinero.redondear(monto):
+        raise ErrorDeValidacion(campo, f"{campo.capitalize()}: como máximo 2 decimales.")
+    if monto < 0 or (monto == 0 and not permitir_cero) or monto > MONTO_MAXIMO:
+        raise ErrorDeValidacion(campo, f"{campo.capitalize()}: tiene que ser mayor que cero.")
+    return monto

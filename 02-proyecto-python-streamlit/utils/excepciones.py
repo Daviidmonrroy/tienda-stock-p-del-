@@ -39,3 +39,15 @@ class PermisoDenegado(ErrorDeNegocio):
 
 class ConfiguracionFaltante(Exception):
     """Falta una variable de entorno o tiene un valor inválido."""
+
+
+class StockInsuficiente(ErrorDeNegocio):
+    """No hay unidades suficientes en la ubicación."""
+
+
+class PrecioFueraDeRango(ErrorDeNegocio):
+    """El precio de venta está fuera del mínimo y el máximo del producto."""
+
+
+class NoEncontrado(ErrorDeNegocio):
+    """El registro pedido no existe (o el usuario no tiene acceso a él)."""
