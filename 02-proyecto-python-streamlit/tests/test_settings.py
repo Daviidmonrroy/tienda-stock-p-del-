@@ -44,7 +44,8 @@ def test_es_inmutable():
     s = Settings.desde_entorno(dict(BASE))
     with pytest.raises(FrozenInstanceError):
         s.db_port = 1
-    with pytest.raises(FrozenInstanceError):
+    # Agregar un atributo que no existe: en Python 3.11 con slots+frozen lanza TypeError; en 3.12+ FrozenInstanceError.
+    with pytest.raises((FrozenInstanceError, TypeError, AttributeError)):
         s.nuevo = 1
 
 

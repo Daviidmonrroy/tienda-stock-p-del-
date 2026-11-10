@@ -16,11 +16,11 @@ import models  # noqa: E402,F401
 from database.base import Base  # noqa: E402
 from models.stock import MovimientoStock, StockActual  # noqa: E402
 from services import (auth_service, catalogo_service, clientes_service, comisiones_service,  # noqa: E402
-                      compras_service, reportes_service, stock_service, ventas_service)
+                      compras_service, reportes_service, stock_service, ventas_service, zona_service)
 from utils.excepciones import ErrorDeNegocio, PermisoDenegado, PrecioFueraDeRango, StockInsuficiente  # noqa: E402
 
 MODULOS = (auth_service, catalogo_service, clientes_service, comisiones_service, compras_service,
-           reportes_service, stock_service, ventas_service)
+           reportes_service, stock_service, ventas_service, zona_service)
 
 
 @pytest.fixture()
@@ -49,10 +49,12 @@ def fabrica(monkeypatch):
 @pytest.fixture()
 def mundo(fabrica):
     """Admin, vendedor con mochila, un producto con 10 unidades en el local."""
-    d = lambda email, rol: auth_service.validar_datos_registro("Persona Prueba", email, "clave-segura1", rol, None, "")
+    d = lambda email, rol, zona=None: auth_service.validar_datos_registro(
+        "Persona Prueba", email, "clave-segura1", rol, zona, "")
     auth_service.registrar_usuario(d("admin@v.com", "admin"))
     admin = auth_service.iniciar_sesion("admin@v.com", "clave-segura1")
-    auth_service.registrar_usuario(d("vend@v.com", "vendedor"), actor=admin)
+    zona = zona_service.crear_zona("Córdoba", admin)           # un vendedor necesita zona
+    auth_service.registrar_usuario(d("vend@v.com", "vendedor", zona), actor=admin)
     vend = auth_service.iniciar_sesion("vend@v.com", "clave-segura1")
     local = stock_service.crear_ubicacion(admin, "Local", "local")
     mochila = stock_service.crear_ubicacion(admin, "Mochila Persona", "mochila", vend.id)
