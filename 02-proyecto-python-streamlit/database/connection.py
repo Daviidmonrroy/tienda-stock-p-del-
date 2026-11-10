@@ -16,7 +16,8 @@ from config.settings import obtener_settings
 def obtener_engine():
     settings = obtener_settings()
     # echo=True imprime cada SQL por consola: útil para depurar, no para producción.
-    return create_engine(settings.url_base_de_datos, echo=settings.sql_echo, pool_pre_ping=True)
+    argumentos = {"connect_args": {"check_same_thread": False}} if settings.db_engine == "sqlite" else {}
+    return create_engine(settings.url_base_de_datos, echo=settings.sql_echo, pool_pre_ping=True, **argumentos)
 
 
 @lru_cache(maxsize=1)

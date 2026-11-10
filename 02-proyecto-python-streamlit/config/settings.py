@@ -22,10 +22,13 @@ class Settings:
     db_user: str
     db_password: str
     sql_echo: bool = False
+    db_engine: str = "mysql"        # "mysql" (el definitivo) o "sqlite" (solo demostración local)
 
     @property
     def url_base_de_datos(self) -> str:
         """URL de conexión para SQLAlchemy. La clave se codifica por si tiene @, : o /."""
+        if self.db_engine == "sqlite":          # archivo local <DB_NAME>.db, sin servidor
+            return f"sqlite:///{self.db_name}.db"
         usuario = quote_plus(self.db_user)
         clave = quote_plus(self.db_password)
         return f"mysql+pymysql://{usuario}:{clave}@{self.db_host}:{self.db_port}/{self.db_name}"
@@ -41,6 +44,13 @@ class Settings:
                 raise ConfiguracionFaltante(f"Falta la variable de entorno {nombre} (ver .env.example).")
             return valor
 
+        motor = env.get("DB_ENGINE", "mysql").strip().lower() or "mysql"
+        if motor not in ("mysql", "sqlite"):
+            raise ConfiguracionFaltante("DB_ENGINE debe ser 'mysql' o 'sqlite'.")
+        if motor == "sqlite":                   # sin servidor: no hay usuario ni clave de base de datos
+            return cls(db_host="", db_port=0, db_name=env.get("DB_NAME", "vibra_demo").strip() or "vibra_demo",
+                       db_user="", db_password="", sql_echo=env.get("SQL_ECHO", "false").strip().lower() in _VERDADERO,
+                       db_engine="sqlite")
         try:
             puerto = int(env.get("DB_PORT", "3306"))
         except ValueError as error:

@@ -46,3 +46,17 @@ def test_es_inmutable():
         s.db_port = 1
     with pytest.raises(FrozenInstanceError):
         s.nuevo = 1
+
+
+def test_modo_sqlite_no_pide_usuario_ni_clave():
+    s = Settings.desde_entorno({"DB_ENGINE": "sqlite"})
+    assert s.db_engine == "sqlite" and s.url_base_de_datos == "sqlite:///vibra_demo.db"
+
+
+def test_motor_invalido():
+    with pytest.raises(ConfiguracionFaltante, match="DB_ENGINE"):
+        Settings.desde_entorno({**BASE, "DB_ENGINE": "oracle"})
+
+
+def test_por_defecto_sigue_siendo_mysql():
+    assert Settings.desde_entorno(dict(BASE)).db_engine == "mysql"
