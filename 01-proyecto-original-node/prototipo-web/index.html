@@ -102,6 +102,16 @@ nav button.active{color:#fff;border-bottom-color:var(--accent)}
 .cart-submit{width:100%}
 @media(max-width:720px){.sale-layout{grid-template-columns:1fr}.sale-cart{position:static}.sale-entry{padding:0}}
 
+
+.products-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:16px;align-items:start}
+.products-layout>.panel{min-width:0}
+.product-form{position:sticky;top:225px}
+.product-form-fields{display:grid;gap:11px}
+.product-form .field{min-width:0}
+.product-form .field input,.product-form .field select{width:100%}
+.product-form .btn{width:100%;margin-top:3px}
+@media(max-width:760px){.products-layout{grid-template-columns:1fr}.product-form{position:static;order:-1}}
+
 </style>
 </head>
 <body>
@@ -206,18 +216,8 @@ function renderDashboard(m){
 
 // ---------- PRODUCTOS ----------
 function renderProductos(m){
-  const p=panel('Nuevo producto');
-  p.innerHTML+=`
-    <div class="row">
-      <div class="field"><label>Nombre</label><input id="pf-nombre"></div>
-      <div class="field"><label>Categoría</label><select id="pf-cat">${db.categorias.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
-      <div class="field"><label>Marca</label><select id="pf-marca">${db.marcas.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
-      <div class="field"><label>Precio venta</label><input id="pf-precio" type="number" min="0"></div>
-      <div class="field"><label>Stock inicial</label><input id="pf-stock" type="number" min="0" value="0"></div>
-      <div class="field"><label>Stock mínimo</label><input id="pf-min" type="number" min="0" value="0"></div>
-      <button class="btn" onclick="addProducto()">Agregar</button>
-    </div>`;
-  m.appendChild(p);
+  const layout=document.createElement('div');
+  layout.className='products-layout';
   const list=panel('Catálogo');
   const rows=db.productos.map(pr=>{
     const cat=byId(db.categorias,pr.categoria), marca=byId(db.marcas,pr.marca);
@@ -228,7 +228,21 @@ function renderProductos(m){
       <td><button type="button" class="btn toggle" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</button></td></tr>`;
   }).join('');
   list.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Categoría/Marca</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th></tr>${rows}</table></div>`;
-  m.appendChild(list);
+  const form=panel('Nuevo producto');
+  form.classList.add('product-form');
+  form.innerHTML+=`<p class="small" style="margin:0 0 14px">Sumá un artículo al catálogo.</p>
+    <div class="product-form-fields">
+      <div class="field"><label>Nombre</label><input id="pf-nombre" placeholder="Ej. Paleta Control Pro"></div>
+      <div class="field"><label>Categoría</label><select id="pf-cat">${db.categorias.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
+      <div class="field"><label>Marca</label><select id="pf-marca">${db.marcas.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
+      <div class="field"><label>Precio de venta</label><input id="pf-precio" type="number" min="0" placeholder="0"></div>
+      <div class="field"><label>Stock inicial</label><input id="pf-stock" type="number" min="0" value="0"></div>
+      <div class="field"><label>Stock mínimo</label><input id="pf-min" type="number" min="0" value="0"></div>
+      <button class="btn" onclick="addProducto()">Agregar producto</button>
+    </div>`;
+  layout.appendChild(list);
+  layout.appendChild(form);
+  m.appendChild(layout);
 }
 function addProducto(){
   const nombre=document.getElementById('pf-nombre').value.trim();
