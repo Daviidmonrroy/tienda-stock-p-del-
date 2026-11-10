@@ -10,3 +10,6 @@ __pycache__/
 .pytest_cache/
 .venv/
 .streamlit/secrets.toml
+
+# Claves en texto plano de la semilla (solo desarrollo local)
+02-proyecto-python-streamlit/scripts/semilla_usuarios.txt

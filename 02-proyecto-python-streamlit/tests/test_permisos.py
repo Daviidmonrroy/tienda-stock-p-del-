@@ -5,7 +5,7 @@ from utils.excepciones import PermisoDenegado
 
 
 def test_roles():
-    assert set(ROLES) == {"admin", "empleado", "vendedor"}
+    assert set(ROLES) == {"admin", "empleado", "vendedor", "auditor"}
 
 
 def test_admin_tiene_todo():
@@ -30,3 +30,11 @@ def test_rol_desconocido_no_tiene_nada():
     assert not tiene_permiso("hacker", "catalogo.ver")
     with pytest.raises(PermisoDenegado):
         exigir_permiso("hacker", "catalogo.ver")
+
+
+def test_auditor_solo_lee():
+    for permiso in ("catalogo.ver", "costos.ver", "stock.ver_todo", "ventas.ver_todas", "reportes.ver"):
+        assert tiene_permiso("auditor", permiso)
+    for permiso in ("catalogo.editar", "stock.ajustar", "ventas.registrar", "ventas.anular",
+                    "compras.registrar", "gastos.gestionar", "usuarios.gestionar", "comisiones.liquidar"):
+        assert not tiene_permiso("auditor", permiso)

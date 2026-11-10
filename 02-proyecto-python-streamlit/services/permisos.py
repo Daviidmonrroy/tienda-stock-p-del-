@@ -12,6 +12,9 @@ PERMISOS_POR_ROL: dict[str, frozenset[str]] = {
     "admin": _TODOS,
     "empleado": frozenset({"catalogo.ver", "clientes.gestionar", "stock.ver_propio",
                            "ventas.registrar", "ventas.ver_propias"}),
+    # Auditor: solo lectura. Ve catálogo con costos, todo el stock, todas las ventas y el panel; no modifica nada.
+    "auditor": frozenset({"catalogo.ver", "costos.ver", "stock.ver_propio", "stock.ver_todo",
+                          "ventas.ver_propias", "ventas.ver_todas", "reportes.ver"}),
     "vendedor": frozenset({"catalogo.ver", "clientes.gestionar", "stock.ver_propio",
                            "ventas.registrar", "ventas.ver_propias", "comisiones.ver_propias"}),
 }

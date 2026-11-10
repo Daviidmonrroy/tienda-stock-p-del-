@@ -14,7 +14,8 @@ from views.utilidades import ejecutar
 def mostrar() -> None:
     actor = requerir_permiso("reportes.ver")
     st.header("Panel del dueño")
-    tabs = st.tabs(["Resumen", "Gastos", "Comisiones"])
+    solo_lectura = not tiene_permiso(actor.rol, "gastos.gestionar")      # auditor
+    tabs = st.tabs(["Resumen"] if solo_lectura else ["Resumen", "Gastos", "Comisiones"])
     with tabs[0]:
         c1, c2 = st.columns(2)
         desde = c1.date_input("Desde", date.today().replace(day=1))
@@ -34,6 +35,8 @@ def mostrar() -> None:
         if p["por_dia"]:
             st.bar_chart({str(d["dia"]): float(d["vendido"]) for d in p["por_dia"]})
         st.download_button("Descargar por vendedor (CSV)", a_csv(p["por_vendedor"]), "ventas_por_vendedor.csv", "text/csv")
+    if solo_lectura:
+        return
     with tabs[1]:
         with st.form("gasto", clear_on_submit=True):
             f = st.date_input("Fecha", date.today())

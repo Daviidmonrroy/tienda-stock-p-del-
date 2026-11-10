@@ -19,7 +19,7 @@ class Usuario(Base):
     nombre: Mapped[str] = mapped_column(String(120))
     email: Mapped[str] = mapped_column(String(160))
     password_hash: Mapped[str] = mapped_column(String(255))
-    rol: Mapped[str] = mapped_column(Enum("admin", "empleado", "vendedor", name="rol_usuario"))
+    rol: Mapped[str] = mapped_column(Enum("admin", "empleado", "vendedor", "auditor", name="rol_usuario"))
     zona_id: Mapped[Optional[int]] = mapped_column(ForeignKey("zonas.id"), nullable=True)
     activo: Mapped[bool] = mapped_column(Boolean, default=True)
     intentos_fallidos: Mapped[int] = mapped_column(Integer, default=0, server_default="0")

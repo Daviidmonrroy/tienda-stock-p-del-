@@ -15,7 +15,7 @@ CREATE TABLE usuarios (
   nombre VARCHAR(120) NOT NULL,
   email VARCHAR(160) NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
-  rol ENUM('admin','empleado','vendedor') NOT NULL,
+  rol ENUM('admin','empleado','vendedor','auditor') NOT NULL,
   zona_id INT UNSIGNED NULL,               -- vendedores: su ciudad
   ubicacion_id INT UNSIGNED NULL,          -- empleados: el sector donde trabajan (local o cancha)
   activo TINYINT(1) NOT NULL DEFAULT 1,
