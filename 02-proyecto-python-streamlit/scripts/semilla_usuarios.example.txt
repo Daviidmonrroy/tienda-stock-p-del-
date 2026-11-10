@@ -1,4 +1,3 @@
-# Copiar a semilla_usuarios.txt y poner claves propias (mínimo 8 caracteres, con letras y números).
-# Formato: rol=clave. Los emails NO van acá: están en .env (ADMIN_EMAIL y AUDITOR_EMAIL).
+# Copiar a semilla_usuarios.txt y poner una clave propia (mínimo 8 caracteres, con letras y números).
+# Formato: rol=clave. El email NO va acá: está en .env (ADMIN_EMAIL).
 admin=poner-clave-del-admin-1
-auditor=poner-clave-del-auditor-1

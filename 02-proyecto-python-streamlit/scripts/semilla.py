@@ -1,8 +1,8 @@
-"""Semilla de usuarios: crea, SI NO EXISTEN, un administrador y un auditor.  Ejecutar desde la carpeta del proyecto:
+"""Semilla de usuarios: crea, SI NO EXISTE, un administrador.  Ejecutar desde la carpeta del proyecto:
     python -m scripts.semilla
 
 De dónde sale cada dato:
-  - Emails:  del archivo .env  (ADMIN_EMAIL y AUDITOR_EMAIL).
+  - Emails:  del archivo .env  (ADMIN_EMAIL).
   - Claves:  del archivo scripts/semilla_usuarios.txt (texto plano, solo para desarrollo local; está en .gitignore).
   - En la base de datos las claves se guardan SIEMPRE hasheadas con bcrypt (lo hace auth_service).
 
@@ -27,8 +27,8 @@ class CredencialSemilla:
 
 
 ARCHIVO_CLAVES = Path(__file__).with_name("semilla_usuarios.txt")
-VARIABLES_EMAIL = {"admin": "ADMIN_EMAIL", "auditor": "AUDITOR_EMAIL"}
-NOMBRES = {"admin": "Administrador Vibra", "auditor": "Auditor Vibra"}
+VARIABLES_EMAIL = {"admin": "ADMIN_EMAIL"}
+NOMBRES = {"admin": "Administrador Vibra"}
 
 
 def leer_claves(texto: str) -> dict[str, str]:
@@ -47,7 +47,7 @@ def leer_claves(texto: str) -> dict[str, str]:
 
 
 def armar_credenciales(entorno: dict[str, str], claves: dict[str, str]) -> list[CredencialSemilla]:
-    """Une emails (.env) y claves (.txt). El admin va primero porque hace falta para crear al auditor."""
+    """Une emails (.env) y claves (.txt)."""
     lista = []
     for rol, variable in VARIABLES_EMAIL.items():
         email = (entorno.get(variable) or "").strip()
@@ -70,16 +70,14 @@ def sembrar(credenciales: list[CredencialSemilla]) -> list[str]:
         with session_scope() as sesion:
             return usuario_repository.buscar_por_email(sesion, email.strip().lower()) is not None
 
-    mensajes, actor = [], None
-    for cred in credenciales:               # admin primero
+    mensajes = []
+    for cred in credenciales:
         if existe(cred.email):
             mensajes.append(f"{cred.rol}: ya existía ({cred.email}), no se modifica.")
         else:
             datos = auth_service.validar_datos_registro(cred.nombre, cred.email, cred.clave, cred.rol)
-            auth_service.registrar_usuario(datos, actor=actor)     # actor=None solo es válido para el primer admin
+            auth_service.registrar_usuario(datos, actor=None)       # actor=None solo es válido para el primer admin
             mensajes.append(f"{cred.rol}: creado ({cred.email}).")
-        if cred.rol == "admin" and actor is None:
-            actor = auth_service.iniciar_sesion(cred.email, cred.clave)
     return mensajes
 
 

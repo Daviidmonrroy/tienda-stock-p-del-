@@ -18,7 +18,7 @@ class UsuarioEntidad:
     id: int
     nombre: str
     email: str
-    rol: str                    # admin | empleado | vendedor | auditor
+    rol: str                    # admin | empleado | vendedor
     activo: bool = True
     zona_id: int | None = None
     perfil: PerfilEntidad | None = None
