@@ -141,6 +141,18 @@ nav button.active{color:#fff;border-bottom-color:var(--accent)}
 .catalog-empty{grid-column:1/-1;padding:25px 12px;text-align:center;color:var(--muted);font-size:.8rem}
 @media(max-width:520px){.product-cards{grid-template-columns:1fr}.catalog-toolbar{align-items:stretch;flex-direction:column}.catalog-count{align-self:flex-start}}
 
+
+.catalog-filters{display:flex;flex-wrap:wrap;gap:7px;margin:-2px 0 14px}
+.filter-chip{border:1px solid var(--line);border-radius:20px;background:transparent;color:var(--muted);padding:6px 10px;font-size:.68rem;transition:all .16s ease}
+.filter-chip:hover{border-color:var(--accent);color:var(--ink)}
+.filter-chip.active{background:rgba(240,58,55,.14);border-color:rgba(240,58,55,.55);color:var(--danger-ink);font-weight:700}
+.filter-chip.stock-filter{margin-left:auto}
+.filter-chip.stock-filter span{display:inline-block;margin-left:4px;min-width:16px;text-align:center;border-radius:10px;background:rgba(240,58,55,.16);padding:1px 4px;color:var(--danger-ink)}
+.stock-status.is-none{color:#b4b7bd;background:rgba(160,165,175,.13)}
+.product-state{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:600}
+.product-state i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.product-state.active{color:#80d4a8}.product-state.inactive{color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -244,6 +256,9 @@ function renderDashboard(m){
 }
 
 // ---------- PRODUCTOS ----------
+let filtroCategoriaCatalogo='todos';
+let filtroSoloStockBajo=false;
+let busquedaCatalogo='';
 function renderProductos(m){
   const layout=document.createElement('div');
   layout.className='products-layout';
@@ -251,18 +266,23 @@ function renderProductos(m){
   const cards=db.productos.map(pr=>{
     const cat=byId(db.categorias,pr.categoria), marca=byId(db.marcas,pr.marca);
     const category=cat?cat.nombre:'Sin categoría', brand=marca?marca.nombre:'Sin marca';
-    const low=pr.stock<=pr.stock_min;
+    const low=pr.stock<=pr.stock_min, noStock=pr.stock<=0;
+    const stockLabel=noStock?'Sin unidades':low?'Stock bajo':'Stock suficiente';
+    const stockClass=noStock?'is-none':low?'is-low':'is-ok';
     const search=(pr.nombre+' '+category+' '+brand).toLowerCase();
-    return `<article class="product-tile" data-search="${search}">
-      <div class="tile-top"><div class="tile-icon">${catIcon(category)}</div><span class="stock-status ${low?'is-low':'is-ok'}"><i></i>${low?'Stock bajo':'Disponible'}</span></div>
+    return `<article class="product-tile" data-search="${search}" data-category="${pr.categoria}" data-low="${low}">
+      <div class="tile-top"><div class="tile-icon">${catIcon(category)}</div><span class="stock-status ${stockClass}"><i></i>${stockLabel}</span></div>
       <div class="tile-info"><span class="tile-category">${category} · ${brand}</span><h3>${pr.nombre}</h3></div>
       <div class="tile-bottom"><div><span class="tile-price-label">Precio de venta</span><strong class="tile-price">${money(pr.precio)}</strong></div><div class="tile-stock"><strong>${pr.stock}</strong><span>unidades</span></div></div>
-      <div class="tile-actions"><span class="tile-state">${pr.activo?'Producto activo':'Producto inactivo'}</span><button type="button" class="btn toggle" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</button></div>
+      <div class="tile-actions"><span class="product-state ${pr.activo?'active':'inactive'}"><i></i>${pr.activo?'Activo':'Inactivo'}</span><button type="button" class="btn toggle" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</button></div>
     </article>`;
   }).join('');
-  list.innerHTML+=`<div class="catalog-toolbar"><label class="catalog-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="Buscar producto, categoría o marca…" oninput="filtrarCatalogo(this.value)" aria-label="Buscar en el catálogo"></label><span class="catalog-count">${db.productos.length} productos</span></div>
+  const categoryChips=db.categorias.map(c=>`<button type="button" class="filter-chip" data-category-chip="${c.id}" onclick="setCategoriaCatalogo('${c.id}',this)">${c.nombre}</button>`).join('');
+  const lowCount=db.productos.filter(p=>p.stock<=p.stock_min).length;
+  list.innerHTML+=`<div class="catalog-toolbar"><label class="catalog-search"><span aria-hidden="true">⌕</span><input id="catalog-search-input" type="search" placeholder="Buscar producto, categoría o marca…" oninput="filtrarCatalogo(this.value)" aria-label="Buscar en el catálogo"></label><span id="catalog-count" class="catalog-count">${db.productos.length} productos</span></div>
+    <div class="catalog-filters"><button type="button" class="filter-chip" data-category-chip="todos" onclick="setCategoriaCatalogo('todos',this)">Todos</button>${categoryChips}<button type="button" class="filter-chip stock-filter" id="low-stock-filter" onclick="toggleStockBajo(this)">Stock bajo <span>${lowCount}</span></button></div>
     <div class="product-cards">${cards||'<div class="catalog-empty">Todavía no hay productos en el catálogo.</div>'}</div>
-    <div id="catalog-empty-search" class="catalog-empty" style="display:none">No encontramos productos con esa búsqueda.</div>`;
+    <div id="catalog-empty-search" class="catalog-empty" style="display:none">No encontramos productos con esos filtros.</div>`;
   const form=panel('Nuevo producto');
   form.classList.add('product-form');
   form.innerHTML+=`<p class="small" style="margin:0 0 14px">Sumá un artículo al catálogo.</p>
@@ -278,12 +298,40 @@ function renderProductos(m){
   layout.appendChild(list);
   layout.appendChild(form);
   m.appendChild(layout);
+  const input=document.getElementById('catalog-search-input');
+  input.value=busquedaCatalogo;
+  document.querySelectorAll('[data-category-chip]').forEach(button=>button.classList.toggle('active',button.dataset.categoryChip===filtroCategoriaCatalogo));
+  const lowButton=document.getElementById('low-stock-filter');
+  if(lowButton)lowButton.classList.toggle('active',filtroSoloStockBajo);
+  aplicarFiltrosCatalogo();
 }
 function filtrarCatalogo(query){
-  const term=(query||'').toLocaleLowerCase('es');
+  busquedaCatalogo=(query||'').toLocaleLowerCase('es').trim();
+  aplicarFiltrosCatalogo();
+}
+function setCategoriaCatalogo(category){
+  filtroCategoriaCatalogo=String(category);
+  document.querySelectorAll('[data-category-chip]').forEach(button=>button.classList.toggle('active',button.dataset.categoryChip===filtroCategoriaCatalogo));
+  aplicarFiltrosCatalogo();
+}
+function toggleStockBajo(button){
+  filtroSoloStockBajo=!filtroSoloStockBajo;
+  button.classList.toggle('active',filtroSoloStockBajo);
+  aplicarFiltrosCatalogo();
+}
+function aplicarFiltrosCatalogo(){
   const cards=[...document.querySelectorAll('.product-tile')];
   let visible=0;
-  cards.forEach(card=>{const match=card.dataset.search.includes(term);card.style.display=match?'':'none';if(match)visible++;});
+  cards.forEach(card=>{
+    const matchSearch=card.dataset.search.includes(busquedaCatalogo);
+    const matchCategory=filtroCategoriaCatalogo==='todos'||card.dataset.category===filtroCategoriaCatalogo;
+    const matchLow=!filtroSoloStockBajo||card.dataset.low==='true';
+    const show=matchSearch&&matchCategory&&matchLow;
+    card.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  const count=document.getElementById('catalog-count');
+  if(count)count.textContent=visible===cards.length?`${cards.length} productos`:`${visible} de ${cards.length} productos`;
   const empty=document.getElementById('catalog-empty-search');
   if(empty)empty.style.display=cards.length&&!visible?'block':'none';
 }
