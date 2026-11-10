@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -6,103 +6,52 @@
 <title>Vibra Deportiva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* Layout: encabezado negro con el logotipo; contenido en tarjetas. Identidad Vibra Deportiva: rojo impacto, negro cancha, gris pala. */
-:root{
-  --bg:#F3F1F2; --panel:#FFFFFF; --ink:#0B1015; --muted:#5B575C; --line:#DDD9DC;
-  --court:#D12E2B; --court-hover:#B02522; --link:#D12E2B;
-  --head:#0B1015; --head-ink:#FFFFFF; --head-muted:#B9B4B8; --head-line:#2A2F37;
-  --accent:#F03A37; --danger:#D12E2B; --danger-ink:#D12E2B;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0B1015; --panel:#1B1F26; --ink:#F1EFF0; --muted:#A8A2A7; --line:#2A2F37;
-    --court-hover:#E8453F; --link:#FF7A77; --danger-ink:#FF7A77; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0B1015; --panel:#1B1F26; --ink:#F1EFF0; --muted:#A8A2A7; --line:#2A2F37;
-  --court-hover:#E8453F; --link:#FF7A77; --danger-ink:#FF7A77; color-scheme:dark;
-}
-*{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%}
-body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Inter','Segoe UI',system-ui,-apple-system,Arial,sans-serif;}
-header{position:sticky;top:0;padding-top:env(safe-area-inset-top,0px);background:var(--head);color:var(--head-ink);z-index:5;border-bottom:1px solid var(--head-line)}
-.head-in{max-width:1000px;margin:0 auto;padding:18px 20px;display:flex;align-items:center;justify-content:center;gap:10px 22px;flex-wrap:wrap}
-.brand{width:250px;height:auto;flex-shrink:0;display:block}
-.sub{font-size:.8rem;color:var(--head-muted)}
-nav{display:flex;gap:2px;overflow-x:auto;max-width:1000px;margin:0 auto;background:var(--head);padding:0 12px;border-top:1px solid var(--head-line);-ms-overflow-style:none;scrollbar-width:none}
+:root{--bg:#0b1015;--panel:#1b1f26;--ink:#f1eff0;--muted:#a8a2a7;--line:#30353d;--red:#f03a37;--red-hover:#d12e2b;--soft-red:#3c2425;--green:#7bd4a5;--soft-green:#20382f;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:10px}body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:Inter,Segoe UI,system-ui,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:5;background:#0b1015;border-bottom:1px solid #2a2f37}
+.head-in{max-width:1000px;margin:0 auto;padding:14px 20px;display:flex;justify-content:center;align-items:center}
+.brand{width:250px;height:auto;display:block}
+nav{display:flex;justify-content:center;gap:2px;overflow-x:auto;max-width:1000px;margin:0 auto;background:#0b1015;padding:0 12px;border-top:1px solid #2a2f37;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav button{background:none;border:none;color:var(--head-muted);padding:11px 14px;font-size:.86rem;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
-nav button.active{color:#fff;border-bottom-color:var(--accent);font-weight:600}
-@media(max-width:480px){.brand{width:210px}}
-main{max-width:1000px;margin:0 auto;padding:20px;padding-bottom:60px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px}
-.panel h2{margin:0 0 12px;font-size:1rem}
+nav button{background:none;border:0;color:#b9b4b8;padding:13px 16px;font-size:.9rem;white-space:nowrap;border-bottom:3px solid transparent}
+nav button:hover{color:#fff;background:rgba(255,255,255,.045)}
+nav button.active{color:#fff;border-bottom-color:var(--red);font-weight:700}
+main{max-width:1000px;margin:0 auto;padding:20px 20px 60px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:17px;margin-bottom:16px}
+.panel h2{font-size:1rem;margin:0 0 14px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
-.field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
+.field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:135px}
 label{font-size:.72rem;color:var(--muted)}
-input,select{padding:8px 9px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);font-size:.88rem}
-button.btn{background:var(--court);color:#fff;border:none;padding:9px 16px;border-radius:5px;cursor:pointer;font-size:.85rem;font-weight:600}
-button.btn:hover{background:var(--court-hover)}
-button.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink)}
-button.btn.danger{background:var(--danger)}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
-th{color:var(--muted);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.3px}
+input,select{padding:10px 11px;border:1px solid #3a414c;border-radius:7px;background:#11161d;color:var(--ink);font-size:.84rem;min-width:0}
+input:focus,select:focus{outline:2px solid #f03a3755;border-color:var(--red)}
+.btn{background:var(--red-hover);color:#fff;border:1px solid transparent;padding:10px 15px;border-radius:8px;font-size:.82rem;font-weight:700;box-shadow:0 3px 10px #d12e2b2b;transition:.16s}
+.btn:hover{background:#e8453f;transform:translateY(-1px);box-shadow:0 5px 14px #d12e2b40}
+.btn.ghost{background:transparent;color:var(--ink);border-color:#515762;box-shadow:none}
+.btn.ghost:hover{background:#292e36;border-color:#707784;transform:none}
+.btn.toggle{background:#3c2425;color:#ff8982;border-color:#673332;padding:6px 10px;font-size:.73rem;box-shadow:none}
+.btn.toggle:hover{background:var(--red-hover);color:#fff;border-color:var(--red-hover)}
+.btn:focus-visible,nav button:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:.35px}
 .tablewrap{overflow-x:auto}
-.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.72rem;background:var(--line)}
-.pill.low{background:var(--danger);color:#fff}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
 .grid2 .panel{margin-bottom:0}
-@media(max-width:640px){.grid2{grid-template-columns:1fr}}
-.stat{font-size:1.7rem;font-weight:700}
-.statlabel{font-size:.75rem;color:var(--muted)}
-.detail-row{display:flex;gap:8px;align-items:center;margin-bottom:6px;flex-wrap:wrap}
-.small{font-size:.78rem;color:var(--muted)}
-.catcell{display:flex;align-items:center;gap:10px}
-.ic{display:inline-flex;width:36px;height:36px;border-radius:9px;background:var(--head);align-items:center;justify-content:center;flex-shrink:0}
-.ic svg{width:26px;height:26px;display:block}
-a.link{color:var(--link);cursor:pointer;font-size:.8rem}
-
-/* Botones: más claros y consistentes, conservando el diseño original */
-button.btn{border-radius:8px;padding:10px 17px;box-shadow:0 3px 10px rgba(209,46,43,.18);transition:background .18s ease,transform .18s ease,box-shadow .18s ease}
-button.btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(209,46,43,.25)}
-button.btn:active{transform:translateY(0)}
-button.btn:focus-visible,nav button:focus-visible,a.link:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-button.btn.ghost{box-shadow:none}
-a.link{display:inline-flex;align-items:center;text-decoration:none;padding:6px 10px;border:1px solid rgba(240,58,55,.35);border-radius:6px;background:rgba(240,58,55,.1);font-weight:600;transition:background .18s ease,border-color .18s ease}
-a.link:hover{background:rgba(240,58,55,.2);border-color:var(--accent)}
-
-
-button.btn.toggle{background:transparent;color:var(--link);border:1px solid rgba(240,58,55,.4);padding:6px 11px;font-size:.78rem;box-shadow:none}
-button.btn.toggle:hover{background:var(--court);color:#fff;border-color:var(--court);box-shadow:0 4px 12px rgba(209,46,43,.2)}
-nav button:hover{color:#fff;background:rgba(255,255,255,.06)}
-nav button.active{color:#fff;border-bottom-color:var(--accent)}
-
-
-.sale-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:22px;align-items:start}
-.sale-entry{min-width:0;padding:4px}
-.sale-cart{position:sticky;top:230px;background:rgba(11,16,21,.28);border:1px solid var(--line);border-radius:10px;padding:16px}
-.cart-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
-.cart-heading h3{font-size:.95rem;margin:0}
-.cart-lines{min-height:104px}
-.cart-empty{text-align:center;padding:25px 8px;color:var(--muted);font-size:.82rem;line-height:1.7}
-.cart-empty span{font-size:.72rem}
-.cart-item{display:grid;grid-template-columns:minmax(0,1fr) auto 28px;gap:8px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
-.cart-product{display:grid;gap:4px;min-width:0}
-.cart-product strong{font-size:.78rem;overflow:hidden;text-overflow:ellipsis}
-.cart-product span{font-size:.69rem;color:var(--muted)}
-.cart-price{font-size:.78rem;font-weight:700}
-.cart-remove{background:none;border:0;border-radius:5px;color:var(--danger-ink);font-size:1.15rem;padding:3px 7px}
-.cart-remove:hover{background:rgba(240,58,55,.12)}
-.cart-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;font-size:.82rem}
-.cart-total strong{font-size:1.15rem}
-.cart-submit{width:100%}
-@media(max-width:720px){.sale-layout{grid-template-columns:1fr}.sale-cart{position:static}.sale-entry{padding:0}}
-
-
+.stat{font-size:1.7rem;font-weight:800;letter-spacing:-.5px}
+.statlabel{font-size:.76rem;color:var(--muted);margin-top:4px}
+.small{font-size:.76rem;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;padding:4px 9px;border-radius:20px;font-size:.72rem;background:#2b3038;color:#e4e1e3}
+.pill.low{background:#482625;color:#ff8982}
+.pill.good{background:#20382f;color:#83d7ac}
+.detail-row{display:flex;gap:8px;align-items:center;margin-bottom:7px;flex-wrap:wrap}
+.catcell{display:flex;align-items:center;gap:9px}
+.ic{display:inline-flex;width:36px;height:36px;border-radius:9px;background:#0b1015;align-items:center;justify-content:center;flex-shrink:0}
+.ic svg{width:26px;height:26px}
+a.link{display:inline-flex;color:#ff7a77;text-decoration:none;cursor:pointer;font-size:.75rem;font-weight:700;padding:5px 8px;border-radius:6px;background:#3c2425;border:1px solid #673332}
+a.link:hover{background:#5b2a29}
 .products-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:16px;align-items:start}
 .products-layout>.panel{min-width:0}
 .product-form{position:sticky;top:225px}
@@ -110,464 +59,117 @@ nav button.active{color:#fff;border-bottom-color:var(--accent)}
 .product-form .field{min-width:0}
 .product-form .field input,.product-form .field select{width:100%}
 .product-form .btn{width:100%;margin-top:3px}
-@media(max-width:760px){.products-layout{grid-template-columns:1fr}.product-form{position:static;order:-1}}
-
-
-.catalog-toolbar{display:flex;align-items:center;gap:12px;margin:0 0 14px}
+.catalog-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .catalog-search{flex:1;min-width:0;position:relative}
 .catalog-search span{position:absolute;left:12px;top:5px;color:var(--muted);font-size:20px}
-.catalog-search input{width:100%;padding:10px 12px 10px 34px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font-size:.8rem}
-.catalog-search input::placeholder{color:var(--muted)}
-.catalog-count{flex-shrink:0;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:20px;padding:7px 10px;color:var(--muted);font-size:.72rem}
+.catalog-search input{width:100%;padding:10px 12px 10px 34px;font-size:.8rem}
+.catalog-count{flex-shrink:0;border:1px solid var(--line);background:#ffffff09;border-radius:20px;padding:7px 10px;color:var(--muted);font-size:.72rem}
+.catalog-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.filter-chip{border:1px solid var(--line);border-radius:20px;background:transparent;color:var(--muted);padding:6px 10px;font-size:.68rem;transition:.16s}
+.filter-chip:hover{border-color:var(--red);color:var(--ink)}
+.filter-chip.active{background:#f03a3724;border-color:#f03a3788;color:#ff8982;font-weight:700}
+.filter-chip.stock-filter{margin-left:auto}
+.filter-chip.stock-filter span{display:inline-block;margin-left:4px;min-width:16px;text-align:center;border-radius:10px;background:#f03a372b;padding:1px 4px;color:#ff8982}
 .product-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.product-tile{min-width:0;border:1px solid var(--line);border-radius:10px;padding:13px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
-.product-tile:hover{transform:translateY(-2px);border-color:rgba(240,58,55,.55);box-shadow:0 7px 18px rgba(0,0,0,.16)}
+.product-tile{min-width:0;border:1px solid var(--line);border-radius:10px;padding:13px;background:linear-gradient(145deg,#ffffff0b,#ffffff02);transition:transform .18s,border-color .18s,box-shadow .18s}
+.product-tile:hover{transform:translateY(-2px);border-color:#f03a3788;box-shadow:0 7px 18px #0003}
 .tile-top{display:flex;justify-content:space-between;align-items:center;gap:7px}
 .tile-icon{width:38px;height:38px;border-radius:10px;background:#0b1015;display:grid;place-items:center}
 .tile-icon .ic{width:38px;height:38px;margin:0}
-.stock-status{display:inline-flex;align-items:center;gap:6px;font-size:.66rem;font-weight:600;padding:5px 8px;border-radius:20px}
-.stock-status i{width:6px;height:6px;border-radius:50%;background:currentColor}
-.stock-status.is-ok{color:#7bd4a5;background:rgba(57,168,112,.13)}
-.stock-status.is-low{color:#ff8881;background:rgba(240,58,55,.14)}
-.tile-info{margin:12px 0 13px}
-.tile-category{font-size:.66rem;color:var(--muted)}
-.tile-info h3{font-size:.9rem;line-height:1.3;margin:5px 0 0;color:var(--ink)}
+.stock-status{display:inline-flex;align-items:center;gap:6px;font-size:.65rem;font-weight:700;padding:5px 8px;border-radius:20px}
+.stock-status i,.product-state i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.stock-status{color:#7bd4a5;background:#20382f}
+.stock-status.is-low{color:#ff8982;background:#482625}
+.stock-status.is-none{color:#c4c6ca;background:#333841}
+.tile-info{margin:12px 0 13px}.tile-category{font-size:.66rem;color:var(--muted)}
+.tile-info h3{font-size:.9rem;line-height:1.3;margin:5px 0 0}
 .tile-bottom{display:flex;justify-content:space-between;align-items:flex-end;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .tile-price-label,.tile-stock span{display:block;font-size:.63rem;color:var(--muted)}
 .tile-price{display:block;margin-top:3px;font-size:1rem}
 .tile-stock{text-align:right}.tile-stock strong{display:block;font-size:.88rem}
 .tile-actions{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:10px}
-.tile-state{font-size:.65rem;color:var(--muted)}
+.product-state{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:700;color:#80d4a8}
+.product-state.inactive{color:var(--muted)}
+.product-state.inactive i{background:var(--muted)}
 .catalog-empty{grid-column:1/-1;padding:25px 12px;text-align:center;color:var(--muted);font-size:.8rem}
-@media(max-width:520px){.product-cards{grid-template-columns:1fr}.catalog-toolbar{align-items:stretch;flex-direction:column}.catalog-count{align-self:flex-start}}
-
-
-.catalog-filters{display:flex;flex-wrap:wrap;gap:7px;margin:-2px 0 14px}
-.filter-chip{border:1px solid var(--line);border-radius:20px;background:transparent;color:var(--muted);padding:6px 10px;font-size:.68rem;transition:all .16s ease}
-.filter-chip:hover{border-color:var(--accent);color:var(--ink)}
-.filter-chip.active{background:rgba(240,58,55,.14);border-color:rgba(240,58,55,.55);color:var(--danger-ink);font-weight:700}
-.filter-chip.stock-filter{margin-left:auto}
-.filter-chip.stock-filter span{display:inline-block;margin-left:4px;min-width:16px;text-align:center;border-radius:10px;background:rgba(240,58,55,.16);padding:1px 4px;color:var(--danger-ink)}
-.stock-status.is-none{color:#b4b7bd;background:rgba(160,165,175,.13)}
-.product-state{display:inline-flex;align-items:center;gap:5px;font-size:.65rem;font-weight:600}
-.product-state i{width:6px;height:6px;border-radius:50%;background:currentColor}
-.product-state.active{color:#80d4a8}.product-state.inactive{color:var(--muted)}
-
+.sale-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px;align-items:start}
+.sale-entry{min-width:0;padding:4px}
+.sale-cart{position:sticky;top:225px;background:#11161d;border:1px solid var(--line);border-radius:10px;padding:15px}
+.cart-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cart-heading h3{font-size:.95rem;margin:0}
+.cart-lines{min-height:100px}
+.cart-empty{text-align:center;padding:22px 8px;color:var(--muted);font-size:.8rem;line-height:1.7}
+.cart-item{display:grid;grid-template-columns:minmax(0,1fr) auto 26px;gap:7px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.cart-product{display:grid;gap:4px;min-width:0}.cart-product strong{font-size:.76rem;overflow:hidden;text-overflow:ellipsis}
+.cart-product span{font-size:.68rem;color:var(--muted)}
+.cart-price{font-size:.75rem;font-weight:700}
+.cart-remove{background:none;border:0;border-radius:5px;color:#ff8982;font-size:1.15rem;padding:3px 7px}
+.cart-remove:hover{background:#f03a3722}
+.cart-total{display:flex;justify-content:space-between;align-items:center;padding:15px 0;font-size:.82rem}
+.cart-total strong{font-size:1.15rem}
+.cart-submit{width:100%}
+.purchase-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start}
+.purchase-cart{background:#11161d;border:1px solid var(--line);border-radius:10px;padding:15px}
+.page-title{margin:0 0 15px;font-size:1.18rem}
+.empty{text-align:center;padding:20px;color:var(--muted);font-size:.78rem}
+.toast{position:fixed;right:20px;bottom:20px;z-index:10;background:#252b33;border:1px solid #3c434e;color:var(--ink);padding:12px 16px;border-radius:9px;box-shadow:0 8px 25px #0005;font-size:.82rem}
+@media(max-width:760px){.products-layout,.sale-layout,.purchase-layout{grid-template-columns:1fr}.product-form{position:static;order:-1}.sale-cart{position:static}.product-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.head-in{padding:12px}.brand{width:210px}nav{justify-content:flex-start}nav button{padding:11px 12px;font-size:.82rem}main{padding:15px 12px 40px}.grid2{grid-template-columns:1fr}.product-cards{grid-template-columns:1fr}.catalog-toolbar{align-items:stretch;flex-direction:column}.catalog-count{align-self:flex-start}.filter-chip.stock-filter{margin-left:0}.panel{padding:14px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="head-in">
-    <svg class="brand" role="img" aria-label="Vibra Deportiva" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 573.55 142"><path d="M0 0 C52 0 88 38 88 94 C88 146 56 186 26 210 L12 244 L12 304 Q12 314 0 314 Q-12 314 -12 304 L-12 244 L-26 210 C-56 186 -88 146 -88 94 C-88 38 -52 0 0 0 Z M-9 220 L9 220 L0 240 Z M-6.5 172 a6.5 6.5 0 1 0 13 0 a6.5 6.5 0 1 0 -13 0 Z M-20.75 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M-35 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M-49.25 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M-63.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z M6.25 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M19 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M31.75 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M44.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z" fill="#F03A37" fill-rule="evenodd" transform="translate(39.8,0) scale(0.45)"/><path d="M135.86 60H142.18L164.25 0H158.53L144.36 39.58C143.03 43.25 141.34 48.2 139.08 55.05C136.79 48.2 135.14 43.25 133.81 39.58L119.35 0H113.59Z M184.98 0H179.54V60H184.98Z M205.71 60H227.25C240.62 60 247.67 53.48 247.67 43.45C247.67 34.99 241.91 30.24 235.19 29.15V29.07C241.19 27.18 245.25 22.67 245.25 15.7C245.25 6.04 237.97 0 226.37 0H205.71ZM211.15 55.09V31.93H227.54C236.19 31.93 242.11 36.36 242.11 43.65C242.11 50.86 236.72 55.09 227.25 55.09ZM211.15 27.1V4.91H226.57C234.7 4.91 239.86 9.1 239.86 15.99C239.86 22.47 234.91 27.1 227.21 27.1Z M265.62 60H271.06V35.68H286.6C286.92 35.68 287.29 35.68 287.61 35.68L300.62 60H306.94L293.33 34.79C301.26 32.62 306.29 26.5 306.29 17.84C306.29 6.97 298.64 0 286.96 0H265.62ZM271.06 30.77V4.91H286.8C295.38 4.91 300.9 9.91 300.9 17.84C300.9 25.73 295.38 30.77 286.88 30.77Z M319.09 60H324.81L331.29 42.2H357.55L363.95 60H369.75L347.64 0H341.32ZM333.06 37.29 339.22 20.42C340.71 16.27 342.28 11.76 344.5 5.07C346.67 11.76 348.24 16.27 349.73 20.42L355.77 37.29Z" fill="#FFFFFF"/><path d="M137.03 142C155.51 142 167.39 130.24 167.39 112.04C167.39 93.8 155.31 82 136.79 82H113.59V142ZM130.34 128.15V95.85H135.74C145.85 95.85 150.48 101.05 150.48 112.04C150.48 122.95 146.01 128.15 136.22 128.15Z M171.23 142H217.7V127.83H187.99V118.89H215.41V105.19H187.99V96.17H217.7V82H171.23Z M222.35 142H239.1V123.88H247.84C262.18 123.88 271.16 115.79 271.16 102.94C271.16 90.09 262.18 82 247.84 82H222.35ZM239.1 110.11V95.77H246.59C251.63 95.77 254.81 98.55 254.81 102.94C254.81 107.33 251.63 110.11 246.59 110.11Z M302.34 142.97C318.65 142.97 331.5 132.05 331.5 112.04C331.5 91.99 318.65 81.03 302.34 81.03C285.95 81.03 273.19 91.99 273.19 112.04C273.19 131.93 285.95 142.97 302.34 142.97ZM302.34 128.47C294.49 128.47 290.1 122.39 290.1 112.04C290.1 101.65 294.49 95.53 302.34 95.53C310.23 95.53 314.58 101.65 314.58 112.04C314.58 122.39 310.23 128.47 302.34 128.47Z M335.34 142H352.09V123.23H359.58L368.56 142H386L375 119.61C380.84 116.15 384.14 110.39 384.14 102.94C384.14 90.09 375.16 82 360.83 82H335.34ZM352.09 110.27V95.61H359.58C364.61 95.61 367.79 98.55 367.79 102.94C367.79 107.33 364.61 110.27 359.58 110.27Z M385.61 96.17H402.68V142H419.44V96.17H436.51V82H385.61Z M457.1 82H440.35V142H457.1Z M479.47 142H501.7L521.19 82H502.99L496.34 105.28C494.33 112.28 492.48 119.25 490.66 126.26C488.77 119.25 486.84 112.28 484.75 105.28L477.78 82H459.34Z M510.53 142H528.86L531.8 132.13H551.85L554.71 142H573.55L553.22 82H530.67ZM535.66 119.25 535.82 118.72C538 111.48 540.01 104.47 541.98 97.18C543.92 104.47 545.89 111.48 547.98 118.72L548.15 119.25Z" fill="#FFFFFF"/></svg>
-
-  </div>
-  <nav id="nav"></nav>
-</header>
-<main id="main"></main>
-
-<script>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+const {useState,useEffect}=React;
 const KEY='padel_stock_db_v1';
-function seed(){
-  return {
-    seq:{cat:6,marca:2,zona:2,prov:1,prod:7,cli:0,vend:0,venta:0,compra:0},
-    categorias:[{id:1,nombre:'Paletas'},{id:2,nombre:'Indumentaria'},{id:3,nombre:'Accesorios'},{id:4,nombre:'Zapatillas'},{id:5,nombre:'Paleteros'},{id:6,nombre:'Tubos de pelotas'}],
-    marcas:[{id:1,nombre:'Marca A'},{id:2,nombre:'Marca B'}],
-    zonas:[{id:1,nombre:'Zona Norte'},{id:2,nombre:'Zona Sur'}],
-    proveedores:[{id:1,nombre:'Distribuidora Pádel SA',telefono:'',activo:true}],
-    productos:[
-      {id:1,categoria:1,marca:1,nombre:'Paleta Control 1',precio:150000,stock:10,stock_min:2,activo:true},
-      {id:2,categoria:1,marca:2,nombre:'Paleta Power 1',precio:180000,stock:8,stock_min:2,activo:true},
-      {id:3,categoria:2,marca:1,nombre:'Remera Deportiva',precio:45000,stock:20,stock_min:5,activo:true},
-      {id:4,categoria:3,marca:2,nombre:'Overgrip',precio:8000,stock:50,stock_min:10,activo:true},
-      {id:5,categoria:4,marca:1,nombre:'Zapatillas Court Pro',precio:95000,stock:12,stock_min:3,activo:true},
-      {id:6,categoria:5,marca:2,nombre:'Paletero Tour',precio:70000,stock:6,stock_min:2,activo:true},
-      {id:7,categoria:6,marca:1,nombre:'Tubo x3 Pelotas Pro',precio:9500,stock:40,stock_min:10,activo:true}
-    ],
-    clientes:[], vendedores:[], ventas:[], compras:[]
-  };
+const seed=()=>({seq:{cat:6,marca:2,zona:2,prov:1,prod:7,cli:0,vend:0,venta:0,compra:0},categorias:[{id:1,nombre:'Paletas'},{id:2,nombre:'Indumentaria'},{id:3,nombre:'Accesorios'},{id:4,nombre:'Zapatillas'},{id:5,nombre:'Paleteros'},{id:6,nombre:'Tubos de pelotas'}],marcas:[{id:1,nombre:'Marca A'},{id:2,nombre:'Marca B'}],zonas:[{id:1,nombre:'Zona Norte'},{id:2,nombre:'Zona Sur'}],proveedores:[{id:1,nombre:'Distribuidora Pádel SA',telefono:'',activo:true}],productos:[{id:1,categoria:1,marca:1,nombre:'Paleta Control 1',precio:150000,stock:10,stock_min:2,activo:true},{id:2,categoria:1,marca:2,nombre:'Paleta Power 1',precio:180000,stock:8,stock_min:2,activo:true},{id:3,categoria:2,marca:1,nombre:'Remera Deportiva',precio:45000,stock:20,stock_min:5,activo:true},{id:4,categoria:3,marca:2,nombre:'Overgrip',precio:8000,stock:50,stock_min:10,activo:true},{id:5,categoria:4,marca:1,nombre:'Zapatillas Court Pro',precio:95000,stock:12,stock_min:3,activo:true},{id:6,categoria:5,marca:2,nombre:'Paletero Tour',precio:70000,stock:6,stock_min:2,activo:true},{id:7,categoria:6,marca:1,nombre:'Tubo x3 Pelotas Pro',precio:9500,stock:40,stock_min:10,activo:true}],clientes:[],vendedores:[],ventas:[],compras:[]});
+function initialDB(){try{return JSON.parse(localStorage.getItem(KEY))||seed()}catch(e){return seed()}}
+const money=n=>'$'+Number(n||0).toLocaleString('es-AR');
+const byId=(items,id)=>items.find(x=>x.id===Number(id));
+const tabs=[['dashboard','Inicio'],['productos','Productos'],['ventas','Ventas'],['compras','Compras'],['gente','Clientes y vendedores'],['catalogos','Zonas y proveedores'],['reportes','Reportes']];
+function categoryEmoji(name){const n=(name||'').toLowerCase();if(/paleta|pala/.test(n))return '🎾';if(/zapat/.test(n))return '👟';if(/ropa|remera|indument/.test(n))return '👕';if(/paletero|bolso/.test(n))return '🎒';return '🟡'}
+function App(){
+ const [db,setDb]=useState(initialDB),[page,setPage]=useState('dashboard'),[toast,setToast]=useState('');
+ const [search,setSearch]=useState(''),[categoryFilter,setCategoryFilter]=useState('todos'),[lowOnly,setLowOnly]=useState(false);
+ const [product,setProduct]=useState({nombre:'',categoria:'1',marca:'1',precio:'',stock:'0',stock_min:'0'});
+ const [sale,setSale]=useState({vendedor:'',cliente:'',producto:'',cantidad:'1'}),[saleLines,setSaleLines]=useState([]);
+ const [purchase,setPurchase]=useState({proveedor:'',producto:'',cantidad:'1',precio:''}),[purchaseLines,setPurchaseLines]=useState([]);
+ const [person,setPerson]=useState({nombre:'',telefono:'',zona:'1',comision:'10'});
+ const [catalog,setCatalog]=useState({nombre:'',telefono:''});
+ const persist=next=>{setDb(next);try{localStorage.setItem(KEY,JSON.stringify(next))}catch(e){console.error(e)}};
+ const notify=text=>{setToast(text);window.setTimeout(()=>setToast(''),2600)};
+ const nextId=kind=>(db.seq[kind]||0)+1;
+ const low=db.productos.filter(p=>p.activo&&p.stock<=p.stock_min);
+ const totalUnits=db.productos.reduce((s,p)=>s+Number(p.stock||0),0);
+ const nextSeq=(kind)=>({...db.seq,[kind]:nextId(kind)});
+ const addProduct=e=>{e.preventDefault();if(!product.nombre.trim()){notify('Escribí el nombre del producto');return}const id=nextId('prod');persist({...db,seq:nextSeq('prod'),productos:[...db.productos,{id,nombre:product.nombre.trim(),categoria:Number(product.categoria),marca:Number(product.marca),precio:Number(product.precio)||0,stock:Number(product.stock)||0,stock_min:Number(product.stock_min)||0,activo:true}]});setProduct({nombre:'',categoria:'1',marca:'1',precio:'',stock:'0',stock_min:'0'});notify('Producto agregado al catálogo')};
+ const toggleProduct=id=>persist({...db,productos:db.productos.map(p=>p.id===id?{...p,activo:!p.activo}:p)});
+ const addSaleLine=()=>{const p=byId(db.productos,sale.producto),qty=Number(sale.cantidad);if(!byId(db.vendedores,sale.vendedor)){notify('Cargá un vendedor antes de registrar una venta');return}if(!p||qty<1){notify('Elegí un producto y una cantidad válida');return}const already=saleLines.filter(l=>l.producto===p.id).reduce((s,l)=>s+l.cantidad,0);if(already+qty>p.stock){notify('No hay stock suficiente de '+p.nombre);return}setSaleLines([...saleLines,{producto:p.id,cantidad:qty}])};
+ const removeSaleLine=i=>setSaleLines(saleLines.filter((_,n)=>n!==i));
+ const confirmSale=()=>{const vendor=byId(db.vendedores,sale.vendedor);if(!vendor){notify('Cargá un vendedor antes de registrar la venta');return}if(!saleLines.length){notify('Agregá al menos un producto al carrito');return}const detail=saleLines.map(l=>{const p=byId(db.productos,l.producto);return{producto:p.id,cantidad:l.cantidad,precio_unitario:p.precio,subtotal:p.precio*l.cantidad}});const total=detail.reduce((s,d)=>s+d.subtotal,0),commission=Math.round(total*(Number(vendor.comision||0)/100)),id=nextId('venta');persist({...db,seq:nextSeq('venta'),productos:db.productos.map(p=>{const amount=saleLines.filter(l=>l.producto===p.id).reduce((s,l)=>s+l.cantidad,0);return amount?{...p,stock:p.stock-amount}:p}),ventas:[...db.ventas,{id,vendedor:vendor.id,cliente:sale.cliente?Number(sale.cliente):null,fecha:new Date().toISOString(),detalle,total,comision_pct:Number(vendor.comision||0),comision_monto:commission}]});setSaleLines([]);setSale({...sale,cliente:''});notify('Venta registrada correctamente')};
+ const addPurchaseLine=()=>{const p=byId(db.productos,purchase.producto),qty=Number(purchase.cantidad),price=Number(purchase.precio)||0;if(!byId(db.proveedores,purchase.proveedor)){notify('Cargá un proveedor antes de registrar la compra');return}if(!p||qty<1){notify('Elegí un producto y cantidad válida');return}setPurchaseLines([...purchaseLines,{producto:p.id,cantidad:qty,precio:price}])};
+ const removePurchaseLine=i=>setPurchaseLines(purchaseLines.filter((_,n)=>n!==i));
+ const confirmPurchase=()=>{if(!byId(db.proveedores,purchase.proveedor)){notify('Cargá un proveedor antes de registrar la compra');return}if(!purchaseLines.length){notify('Agregá al menos un producto a la compra');return}const details=purchaseLines.map(l=>({producto:l.producto,cantidad:l.cantidad,precio_unitario:l.precio,subtotal:l.precio*l.cantidad})),total=details.reduce((s,d)=>s+d.subtotal,0),id=nextId('compra');persist({...db,seq:nextSeq('compra'),productos:db.productos.map(p=>{const amount=purchaseLines.filter(l=>l.producto===p.id).reduce((s,l)=>s+l.cantidad,0);return amount?{...p,stock:p.stock+amount}:p}),compras:[...db.compras,{id,proveedor:Number(purchase.proveedor),fecha:new Date().toISOString(),detalle:details,total}]});setPurchaseLines([]);notify('Compra registrada y stock actualizado')};
+ const addPerson=(type,e)=>{e.preventDefault();if(!person.nombre.trim()){notify('Escribí el nombre');return}const key=type==='cliente'?'cli':'vend',list=type==='cliente'?'clientes':'vendedores',record=type==='cliente'?{id:nextId(key),nombre:person.nombre.trim(),telefono:person.telefono.trim()}:{id:nextId(key),nombre:person.nombre.trim(),zona:Number(person.zona),comision:Number(person.comision)||0};persist({...db,seq:nextSeq(key),[list]:[...db[list],record]});setPerson({...person,nombre:'',telefono:''});notify(type==='cliente'?'Cliente agregado':'Vendedor agregado')};
+ const addCatalog=(key,seq,withPhone,e)=>{e.preventDefault();if(!catalog.nombre.trim()){notify('Escribí un nombre');return}const id=nextId(seq),record={id,nombre:catalog.nombre.trim()};if(withPhone)record.telefono=catalog.telefono.trim();persist({...db,seq:nextSeq(seq),[key]:[...db[key],record]});setCatalog({nombre:'',telefono:''});notify('Registro agregado')};
+ const setFilter=val=>{setCategoryFilter(val)};
+ const filteredProducts=db.productos.filter(p=>{const c=byId(db.categorias,p.categoria);return(p.nombre+' '+(c?c.nombre:'')+' '+(byId(db.marcas,p.marca)?.nombre||'')).toLowerCase().includes(search.toLowerCase())&&(categoryFilter==='todos'||String(p.categoria)===String(categoryFilter))&&(!lowOnly||p.stock<=p.stock_min)});
+ const PageTitle=({title,subtitle})=><><h1 className="page-title">{title}</h1>{subtitle&&<p className="small" style={{marginTop:-7,marginBottom:15}}>{subtitle}</p>}</>;
+ const ProductCard=({p})=>{const c=byId(db.categorias,p.categoria),b=byId(db.marcas,p.marca),lowStock=p.stock<=p.stock_min,none=p.stock<=0;return <article className="product-tile"><div className="tile-top"><div className="tile-icon"><span aria-hidden="true" style={{fontSize:22}}>{categoryEmoji(c?.nombre)}</span></div><span className={'stock-status '+(none?'is-none':lowStock?'is-low':'')}><i/>{none?'Sin unidades':lowStock?'Stock bajo':'Stock suficiente'}</span></div><div className="tile-info"><span className="tile-category">{c?.nombre||'Sin categoría'} · {b?.nombre||'Sin marca'}</span><h3>{p.nombre}</h3></div><div className="tile-bottom"><div><span className="tile-price-label">Precio de venta</span><strong className="tile-price">{money(p.precio)}</strong></div><div className="tile-stock"><strong>{p.stock}</strong><span>unidades</span></div></div><div className="tile-actions"><span className={'product-state '+(p.activo?'active':'inactive')}><i/>{p.activo?'Activo':'Inactivo'}</span><button className="btn toggle" type="button" onClick={()=>toggleProduct(p.id)}>{p.activo?'Desactivar':'Activar'}</button></div></article>};
+ const Products=()=>{const visible=db.productos.filter(p=>p.nombre.toLowerCase().includes(search.toLowerCase())&&(categoryFilter==='todos'||String(p.categoria)===String(categoryFilter))&&(!lowOnly||p.stock<=p.stock_min));return <div className="products-layout"><section className="panel"><h2>Catálogo</h2><div className="catalog-toolbar"><label className="catalog-search"><span aria-hidden="true">⌕</span><input value={search} onChange={e=>setSearch(e.target.value)} type="search" placeholder="Buscar producto, categoría o marca…"/></label><span className="catalog-count">{visible.length} de {db.productos.length}</span></div><div className="catalog-filters"><button className={'filter-chip '+(categoryFilter==='todos'?'active':'')} onClick={()=>setFilter('todos')}>Todos</button>{db.categorias.map(c=><button key={c.id} className={'filter-chip '+(String(categoryFilter)===String(c.id)?'active':'')} onClick={()=>setFilter(String(c.id))}>{c.nombre}</button>)}<button className={'filter-chip stock-filter '+(lowOnly?'active':'')} onClick={()=>setLowOnly(!lowOnly)}>Stock bajo <span>{low.length}</span></button></div><div className="product-cards">{visible.map(p=><ProductCard key={p.id} p={p}/>)}{!visible.length&&<div className="catalog-empty">No hay productos que coincidan con esos filtros.</div>}</div></section><section className="panel product-form"><h2>Nuevo producto</h2><p className="small" style={{margin:'0 0 14px'}}>Sumá un artículo al catálogo.</p><form className="product-form-fields" onSubmit={addProduct}><div className="field"><label>Nombre</label><input value={product.nombre} onChange={e=>setProduct({...product,nombre:e.target.value})} placeholder="Ej. Paleta Control Pro" required/></div><div className="field"><label>Categoría</label><select value={product.categoria} onChange={e=>setProduct({...product,categoria:e.target.value})}>{db.categorias.map(c=><option value={c.id} key={c.id}>{c.nombre}</option>)}</select></div><div className="field"><label>Marca</label><select value={product.marca} onChange={e=>setProduct({...product,marca:e.target.value})}>{db.marcas.map(c=><option value={c.id} key={c.id}>{c.nombre}</option>)}</select></div><div className="field"><label>Precio de venta</label><input type="number" min="0" value={product.precio} onChange={e=>setProduct({...product,precio:e.target.value})} placeholder="0"/></div><div className="field"><label>Stock inicial</label><input type="number" min="0" value={product.stock} onChange={e=>setProduct({...product,stock:e.target.value})}/></div><div className="field"><label>Stock mínimo</label><input type="number" min="0" value={product.stock_min} onChange={e=>setProduct({...product,stock_min:e.target.value})}/></div><button className="btn">Agregar producto</button></form></section></div>};
+ const Dashboard=()=>{const sold=db.ventas.reduce((s,v)=>s+v.total,0),com=db.ventas.reduce((s,v)=>s+v.comision_monto,0);return <><div className="grid2">{[[db.productos.filter(p=>p.activo).length,'Productos activos'],[low.length,'Con stock bajo'],[money(sold),'Total vendido (histórico)'],[money(com),'Comisiones generadas']].map(([v,l])=><section className="panel" key={l}><div className="stat">{v}</div><div className="statlabel">{l}</div></section>)}</div><section className="panel"><h2>Últimas ventas</h2><div className="tablewrap"><table><thead><tr><th>Venta</th><th>Vendedor</th><th>Cliente</th><th>Total</th></tr></thead><tbody>{db.ventas.slice(-5).reverse().map(v=><tr key={v.id}><td>#{v.id}</td><td>{byId(db.vendedores,v.vendedor)?.nombre||'-'}</td><td>{byId(db.clientes,v.cliente)?.nombre||'Consumidor final'}</td><td>{money(v.total)}</td></tr>)}{!db.ventas.length&&<tr><td colSpan="4" className="small">Todavía no hay ventas registradas.</td></tr>}</tbody></table></div></section></>};
+ const Sales=()=>{const total=saleLines.reduce((s,l)=>s+byId(db.productos,l.producto).precio*l.cantidad,0),count=saleLines.reduce((s,l)=>s+l.cantidad,0);return <><PageTitle title="Ventas" subtitle="Registrá una venta y descontá el stock automáticamente."/><section className="panel"><h2>Registrar venta</h2><div className="sale-layout"><div className="sale-entry"><div className="row"><div className="field"><label>Vendedor</label><select value={sale.vendedor} onChange={e=>setSale({...sale,vendedor:e.target.value})}><option value="">Seleccionar vendedor</option>{db.vendedores.map(v=><option key={v.id} value={v.id}>{v.nombre}</option>)}</select></div><div className="field"><label>Cliente (opcional)</label><select value={sale.cliente} onChange={e=>setSale({...sale,cliente:e.target.value})}><option value="">Consumidor final</option>{db.clientes.map(c=><option key={c.id} value={c.id}>{c.nombre}</option>)}</select></div></div><div className="row" style={{marginTop:16}}><div className="field"><label>Producto</label><select value={sale.producto} onChange={e=>setSale({...sale,producto:e.target.value})}><option value="">Seleccionar producto</option>{db.productos.filter(p=>p.activo).map(p=><option key={p.id} value={p.id}>{p.nombre} · {p.stock} u.</option>)}</select></div><div className="field" style={{maxWidth:130}}><label>Cantidad</label><input type="number" min="1" value={sale.cantidad} onChange={e=>setSale({...sale,cantidad:e.target.value})}/></div><button className="btn ghost" onClick={addSaleLine}>＋ Agregar producto</button></div><p className="small" style={{marginTop:18}}>El stock se descuenta al confirmar la venta.</p></div><aside className="sale-cart"><div className="cart-heading"><h3>Tu carrito</h3><span className="pill">{count} {count===1?'producto':'productos'}</span></div><div className="cart-lines">{saleLines.length?saleLines.map((l,i)=>{const p=byId(db.productos,l.producto);return <div className="cart-item" key={i}><div className="cart-product"><strong>{p.nombre}</strong><span>{l.cantidad} × {money(p.precio)}</span></div><span className="cart-price">{money(p.precio*l.cantidad)}</span><button className="cart-remove" aria-label={'Quitar '+p.nombre} onClick={()=>removeSaleLine(i)}>×</button></div>}):<div className="cart-empty">Tu carrito está vacío.<br/><span>Agregá productos para comenzar.</span></div>}</div><div className="cart-total"><span>Total</span><strong>{money(total)}</strong></div><button className="btn cart-submit" onClick={confirmSale}>Registrar venta</button></aside></div></section><section className="panel"><h2>Historial de ventas</h2><div className="tablewrap"><table><thead><tr><th>#</th><th>Vendedor</th><th>Cliente</th><th>Total</th><th>Comisión</th></tr></thead><tbody>{db.ventas.slice().reverse().map(v=><tr key={v.id}><td>{v.id}</td><td>{byId(db.vendedores,v.vendedor)?.nombre||'-'}</td><td>{byId(db.clientes,v.cliente)?.nombre||'Consumidor final'}</td><td>{money(v.total)}</td><td>{money(v.comision_monto)}</td></tr>)}{!db.ventas.length&&<tr><td colSpan="5" className="small">Sin ventas.</td></tr>}</tbody></table></div></section></>};
+ const Purchases=()=>{const total=purchaseLines.reduce((s,l)=>s+l.precio*l.cantidad,0);return <><PageTitle title="Compras" subtitle="Registrá ingresos de mercadería para actualizar el inventario."/><section className="panel"><h2>Registrar compra</h2><div className="purchase-layout"><div><div className="field" style={{marginBottom:14}}><label>Proveedor</label><select value={purchase.proveedor} onChange={e=>setPurchase({...purchase,proveedor:e.target.value})}><option value="">Seleccionar proveedor</option>{db.proveedores.map(p=><option key={p.id} value={p.id}>{p.nombre}</option>)}</select></div><div className="row"><div className="field"><label>Producto</label><select value={purchase.producto} onChange={e=>setPurchase({...purchase,producto:e.target.value})}><option value="">Seleccionar producto</option>{db.productos.map(p=><option value={p.id} key={p.id}>{p.nombre}</option>)}</select></div><div className="field"><label>Cantidad</label><input type="number" min="1" value={purchase.cantidad} onChange={e=>setPurchase({...purchase,cantidad:e.target.value})}/></div><div className="field"><label>Precio unitario</label><input type="number" min="0" value={purchase.precio} onChange={e=>setPurchase({...purchase,precio:e.target.value})}/></div><button className="btn ghost" onClick={addPurchaseLine}>＋ Agregar producto</button></div></div><aside className="purchase-cart"><h3 style={{margin:'0 0 12px',fontSize:'.9rem'}}>Detalle de compra</h3>{purchaseLines.length?purchaseLines.map((l,i)=><div className="cart-item" key={i}><div className="cart-product"><strong>{byId(db.productos,l.producto).nombre}</strong><span>{l.cantidad} × {money(l.precio)}</span></div><span className="cart-price">{money(l.cantidad*l.precio)}</span><button className="cart-remove" onClick={()=>removePurchaseLine(i)}>×</button></div>):<div className="cart-empty">Todavía no agregaste productos.</div>}<div className="cart-total"><span>Total</span><strong>{money(total)}</strong></div><button className="btn cart-submit" onClick={confirmPurchase}>Registrar compra</button></aside></div></section><section className="panel"><h2>Historial de compras</h2><div className="tablewrap"><table><thead><tr><th>#</th><th>Proveedor</th><th>Total</th></tr></thead><tbody>{db.compras.slice().reverse().map(c=><tr key={c.id}><td>{c.id}</td><td>{byId(db.proveedores,c.proveedor)?.nombre||'-'}</td><td>{money(c.total)}</td></tr>)}{!db.compras.length&&<tr><td colSpan="3" className="small">Sin compras.</td></tr>}</tbody></table></div></section></>};
+ const People=()=>{const submit=(type,e)=>addPerson(type,e);return <><PageTitle title="Clientes y vendedores" subtitle="Gestioná los contactos de tu tienda."/><div className="grid2"><section className="panel"><h2>Nuevo cliente</h2><form className="row" onSubmit={e=>submit('cliente',e)}><div className="field"><label>Nombre y apellido</label><input value={person.nombre} onChange={e=>setPerson({...person,nombre:e.target.value})} required/></div><div className="field"><label>Teléfono</label><input value={person.telefono} onChange={e=>setPerson({...person,telefono:e.target.value})}/></div><button className="btn">Agregar</button></form></section><section className="panel"><h2>Nuevo vendedor</h2><form className="row" onSubmit={e=>submit('vendedor',e)}><div className="field"><label>Nombre y apellido</label><input value={person.nombre} onChange={e=>setPerson({...person,nombre:e.target.value})} required/></div><div className="field"><label>Zona</label><select value={person.zona} onChange={e=>setPerson({...person,zona:e.target.value})}>{db.zonas.map(z=><option value={z.id} key={z.id}>{z.nombre}</option>)}</select></div><div className="field"><label>% Comisión</label><input type="number" min="0" max="100" value={person.comision} onChange={e=>setPerson({...person,comision:e.target.value})}/></div><button className="btn">Agregar</button></form></section><section className="panel"><h2>Clientes</h2><div className="tablewrap"><table><thead><tr><th>Nombre</th><th>Teléfono</th></tr></thead><tbody>{db.clientes.map(c=><tr key={c.id}><td>{c.nombre}</td><td>{c.telefono||'—'}</td></tr>)}{!db.clientes.length&&<tr><td colSpan="2" className="small">Sin clientes cargados.</td></tr>}</tbody></table></div></section><section className="panel"><h2>Vendedores</h2><div className="tablewrap"><table><thead><tr><th>Nombre</th><th>Zona</th><th>Comisión</th></tr></thead><tbody>{db.vendedores.map(v=><tr key={v.id}><td>{v.nombre}</td><td>{byId(db.zonas,v.zona)?.nombre||'—'}</td><td>{v.comision}%</td></tr>)}{!db.vendedores.length&&<tr><td colSpan="3" className="small">Sin vendedores cargados.</td></tr>}</tbody></table></div></section></div></>};
+ const Catalogs=()=>{const create=(key,seq,phone,e)=>addCatalog(key,seq,phone,e);const blocks=[['Zonas','zonas','zona',false],['Proveedores','proveedores','prov',true],['Categorías','categorias','cat',false],['Marcas','marcas','marca',false]];return <><PageTitle title="Zonas y proveedores" subtitle="Organizá las listas que usa el catálogo."/><div className="grid2">{blocks.map(([title,key,seq,phone])=><section className="panel" key={key}><h2>{title}</h2><form className="row" onSubmit={e=>create(key,seq,phone,e)}><div className="field"><label>{phone?'Nombre':'Nombre'}</label><input value={catalog.nombre} onChange={e=>setCatalog({...catalog,nombre:e.target.value})} required/></div>{phone&&<div className="field"><label>Teléfono</label><input value={catalog.telefono} onChange={e=>setCatalog({...catalog,telefono:e.target.value})}/></div>}<button className="btn">Agregar</button></form><div className="tablewrap" style={{marginTop:12}}><table><thead><tr><th>{title}</th>{phone&&<th>Teléfono</th>}</tr></thead><tbody>{db[key].map(x=><tr key={x.id}><td>{x.nombre}</td>{phone&&<td>{x.telefono||'—'}</td>}</tr>)}</tbody></table></div></section>)}</div></>};
+ const Reports=()=>{const bySeller=db.vendedores.map(v=>{const sales=db.ventas.filter(x=>x.vendedor===v.id);return{...v,total:sales.reduce((s,x)=>s+x.total,0),commission:sales.reduce((s,x)=>s+x.comision_monto,0)}});const units={};db.ventas.forEach(v=>v.detalle.forEach(d=>units[d.producto]=(units[d.producto]||0)+d.cantidad));const ranking=Object.entries(units).sort((a,b)=>b[1]-a[1]);return <><PageTitle title="Reportes" subtitle="Un resumen rápido para tomar decisiones."/><section className="panel"><h2>Stock bajo mínimo</h2><div className="tablewrap"><table><thead><tr><th>Producto</th><th>Stock</th><th>Mínimo</th></tr></thead><tbody>{low.map(p=><tr key={p.id}><td>{p.nombre}</td><td><span className="pill low">{p.stock}</span></td><td>{p.stock_min}</td></tr>)}{!low.length&&<tr><td colSpan="3" className="small">Ningún producto por debajo del mínimo.</td></tr>}</tbody></table></div></section><section className="panel"><h2>Ventas y comisiones por vendedor</h2><div className="tablewrap"><table><thead><tr><th>Vendedor</th><th>Total vendido</th><th>Comisión</th></tr></thead><tbody>{bySeller.map(v=><tr key={v.id}><td>{v.nombre}</td><td>{money(v.total)}</td><td>{money(v.commission)}</td></tr>)}{!bySeller.length&&<tr><td colSpan="3" className="small">Sin vendedores.</td></tr>}</tbody></table></div></section><section className="panel"><h2>Productos más vendidos</h2><div className="tablewrap"><table><thead><tr><th>Producto</th><th>Unidades vendidas</th></tr></thead><tbody>{ranking.map(([id,qty])=><tr key={id}><td>{byId(db.productos,id)?.nombre||'—'}</td><td>{qty}</td></tr>)}{!ranking.length&&<tr><td colSpan="2" className="small">Sin ventas registradas.</td></tr>}</tbody></table></div></section></>};
+ let view=page==='dashboard'?<Dashboard/>:page==='productos'?<Products/>:page==='ventas'?<Sales/>:page==='compras'?<Purchases/>:page==='gente'?<People/>:page==='catalogos'?<Catalogs/>:<Reports/>;
+ return <><header><div className="head-in"><svg className="brand" role="img" aria-label="Vibra Deportiva" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 573.55 142"><path d="M0 0 C52 0 88 38 88 94 C88 146 56 186 26 210 L12 244 L12 304 Q12 314 0 314 Q-12 314 -12 304 L-12 244 L-26 210 C-56 186 -88 146 -88 94 C-88 38 -52 0 0 0 Z" fill="#F03A37" transform="translate(39,2) scale(.43)"/><text x="113" y="58" fill="#fff" fontFamily="Arial" fontSize="58" letterSpacing="5">VIBRA</text><text x="112" y="120" fill="#fff" fontFamily="Arial" fontWeight="bold" fontSize="53">DEPORTIVA</text></svg></div><nav>{tabs.map(([id,label])=><button key={id} className={page===id?'active':''} onClick={()=>setPage(id)}>{label}</button>)}</nav></header><main>{view}</main>{toast&&<div className="toast" role="status">{toast}</div>}</>
 }
-let db;
-try{ db = JSON.parse(localStorage.getItem(KEY)) || seed(); }catch(e){ db = seed(); }
-const CAT_ICONS = {"paleta": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Paletas</title><path d=\"M0 0 C52 0 88 38 88 94 C88 146 56 186 26 210 L12 244 L12 304 Q12 314 0 314 Q-12 314 -12 304 L-12 244 L-26 210 C-56 186 -88 146 -88 94 C-88 38 -52 0 0 0 Z M-9 220 L9 220 L0 240 Z M-6.5 172 a6.5 6.5 0 1 0 13 0 a6.5 6.5 0 1 0 -13 0 Z M-20.75 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M-35 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M-49.25 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M-63.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z M6.25 146 a7.25 7.25 0 1 0 14.5 0 a7.25 7.25 0 1 0 -14.5 0 Z M19 120 a8 8 0 1 0 16 0 a8 8 0 1 0 -16 0 Z M31.75 94 a8.75 8.75 0 1 0 17.5 0 a8.75 8.75 0 1 0 -17.5 0 Z M44.5 68 a9.5 9.5 0 1 0 19 0 a9.5 9.5 0 1 0 -19 0 Z\" fill=\"#F03A37\" fill-rule=\"evenodd\" transform=\"translate(0,-68) scale(0.43)\"/></svg>", "pelota": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Pelotas</title><circle cx=\"0\" cy=\"12\" r=\"38\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"4.18\" stroke-linecap=\"round\"><path d=\"M-32.3 -5.1 Q-7.6 12 -32.3 29.1\"/><path d=\"M32.3 -5.1 Q7.6 12 32.3 29.1\"/></g><g transform=\"translate(0,12)\"><path d=\"M-33.86 -43.34 A55 55 0 0 1 33.86 -43.34\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M-43.1 -55.16 A70 70 0 0 1 43.1 -55.16\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"5\" stroke-linecap=\"round\"/></g></svg>", "tubo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Tubos de pelotas</title><g transform=\"translate(0,42)\"><rect x=\"-21\" y=\"-112\" width=\"42\" height=\"112\" rx=\"9\" fill=\"#FFFFFF\" fill-opacity=\".14\" stroke=\"#FFFFFF\" stroke-width=\"4\"/><circle cx=\"0\" cy=\"-18\" r=\"15\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.65\" stroke-linecap=\"round\"><path d=\"M-12.75 -24.75 Q-3 -18 -12.75 -11.25\"/><path d=\"M12.75 -24.75 Q3 -18 12.75 -11.25\"/></g><circle cx=\"0\" cy=\"-52\" r=\"15\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.65\" stroke-linecap=\"round\"><path d=\"M-12.75 -58.75 Q-3 -52 -12.75 -45.25\"/><path d=\"M12.75 -58.75 Q3 -52 12.75 -45.25\"/></g><circle cx=\"0\" cy=\"-86\" r=\"15\" fill=\"#F03A37\"/><g fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"1.65\" stroke-linecap=\"round\"><path d=\"M-12.75 -92.75 Q-3 -86 -12.75 -79.25\"/><path d=\"M12.75 -92.75 Q3 -86 12.75 -79.25\"/></g><rect x=\"-25\" y=\"-124\" width=\"50\" height=\"12\" rx=\"5\" fill=\"#FFFFFF\"/></g></svg>", "paletero": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Paleteros</title><g transform=\"translate(0,56)\"><path d=\"M-14 -118 Q0 -148 14 -118\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><rect x=\"-34\" y=\"-118\" width=\"68\" height=\"118\" rx=\"15\" fill=\"#F03A37\"/><rect x=\"-34\" y=\"-92\" width=\"68\" height=\"7\" fill=\"#FFFFFF\"/><rect x=\"-26\" y=\"-52\" width=\"52\" height=\"38\" rx=\"10\" fill=\"#1B1F26\"/><line x1=\"-17\" y1=\"-41\" x2=\"17\" y2=\"-41\" stroke=\"#FFFFFF\" stroke-width=\"3\" stroke-linecap=\"round\"/></g></svg>", "zapatilla": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Zapatillas</title><g transform=\"translate(-2,38) scale(0.78)\"><path d=\"M-70 -14 L-72 -58 Q-72 -66 -62 -66 L-40 -68 Q-28 -68 -22 -60 L-12 -48 Q0 -42 14 -38 Q40 -32 62 -30 Q78 -28 79 -18 L78 -14 Z\" fill=\"#F03A37\"/><path d=\"M-64 -26 Q-10 -22 50 -20\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"6\" stroke-linecap=\"round\"/><g stroke=\"#FFFFFF\" stroke-width=\"3.4\" stroke-linecap=\"round\"><line x1=\"-9\" y1=\"-55.0\" x2=\"-1\" y2=\"-44.0\"/><line x1=\"5\" y1=\"-50.3\" x2=\"13\" y2=\"-39.3\"/><line x1=\"19\" y1=\"-45.7\" x2=\"27\" y2=\"-34.7\"/></g><rect x=\"-76\" y=\"-14\" width=\"154\" height=\"14\" rx=\"7\" fill=\"#FFFFFF\"/></g></svg>", "remera": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-80 -80 160 160\"><title>Indumentaria</title><g transform=\"translate(0,0) scale(0.6)\"><path d=\"M-34 -76 Q0 -54 34 -76 L82 -52 L100 -4 L62 8 L52 -8 L52 80 L-52 80 L-52 -8 L-62 8 L-100 -4 L-82 -52 Z\" fill=\"#F03A37\"/><rect x=\"-52\" y=\"18\" width=\"104\" height=\"10\" fill=\"#FFFFFF\"/><path d=\"M-34 -76 Q0 -54 34 -76\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"7\" stroke-linecap=\"round\"/></g></svg>"};
-function catIcon(n){
-  n=(n||'').toLowerCase();
-  let k='pelota';
-  if(/paletero|bolso|mochila/.test(n))k='paletero';
-  else if(/paleta|pala\b/.test(n))k='paleta';
-  else if(/zapat|calzado/.test(n))k='zapatilla';
-  else if(/tubo|pelota/.test(n))k='tubo';
-  else if(/indument|ropa|remera|short/.test(n))k='remera';
-  return '<span class="ic" aria-hidden="true">'+CAT_ICONS[k]+'</span>';
-}
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(db)); }catch(e){ console.error('No se pudo guardar', e); } }
-function nid(kind){ db.seq[kind]=(db.seq[kind]||0)+1; return db.seq[kind]; }
-function money(n){ return '$'+Number(n||0).toLocaleString('es-AR'); }
-function byId(arr,id){ return arr.find(x=>x.id===Number(id)); }
-
-const TABS=[
-  {id:'dashboard',label:'Inicio'},
-  {id:'productos',label:'Productos'},
-  {id:'ventas',label:'Ventas'},
-  {id:'compras',label:'Compras'},
-  {id:'gente',label:'Clientes y vendedores'},
-  {id:'catalogos',label:'Zonas y proveedores'},
-  {id:'reportes',label:'Reportes'},
-];
-let active='dashboard';
-const nav=document.getElementById('nav');
-TABS.forEach(t=>{
-  const b=document.createElement('button');
-  b.textContent=t.label; b.onclick=()=>{active=t.id; render();};
-  b.dataset.id=t.id; nav.appendChild(b);
-});
-function markNav(){ [...nav.children].forEach(b=>b.classList.toggle('active', b.dataset.id===active)); }
-
-function render(){
-  markNav();
-  const m=document.getElementById('main');
-  m.innerHTML='';
-  ({dashboard:renderDashboard, productos:renderProductos, ventas:renderVentas,
-    compras:renderCompras, gente:renderGente, catalogos:renderCatalogos, reportes:renderReportes})[active](m);
-}
-
-function panel(title){ const d=document.createElement('div'); d.className='panel'; if(title){const h=document.createElement('h2'); h.textContent=title; d.appendChild(h);} return d; }
-
-// ---------- DASHBOARD ----------
-function renderDashboard(m){
-  const totalStock=db.productos.reduce((s,p)=>s+p.stock,0);
-  const bajos=db.productos.filter(p=>p.activo && p.stock<=p.stock_min).length;
-  const totalVentas=db.ventas.reduce((s,v)=>s+v.total,0);
-  const totalComisiones=db.ventas.reduce((s,v)=>s+v.comision_monto,0);
-  const g=document.createElement('div'); g.className='grid2';
-  g.innerHTML=`
-    <div class="panel"><div class="stat">${db.productos.length}</div><div class="statlabel">Productos activos</div></div>
-    <div class="panel"><div class="stat" style="${bajos?'color:var(--danger-ink)':''}">${bajos}</div><div class="statlabel">Con stock bajo</div></div>
-    <div class="panel"><div class="stat">${money(totalVentas)}</div><div class="statlabel">Total vendido (histórico)</div></div>
-    <div class="panel"><div class="stat">${money(totalComisiones)}</div><div class="statlabel">Comisiones generadas</div></div>
-  `;
-  m.appendChild(g);
-  const p=panel('Últimas ventas');
-  const rows=db.ventas.slice(-5).reverse().map(v=>{
-    const vend=byId(db.vendedores,v.vendedor); const cli=byId(db.clientes,v.cliente);
-    return `<tr><td>#${v.id}</td><td>${vend?vend.nombre:'-'}</td><td>${cli?cli.nombre:'Consumidor final'}</td><td>${money(v.total)}</td></tr>`;
-  }).join('') || `<tr><td colspan="4" class="small">Todavía no hay ventas registradas.</td></tr>`;
-  p.innerHTML+=`<div class="tablewrap"><table><tr><th>Venta</th><th>Vendedor</th><th>Cliente</th><th>Total</th></tr>${rows}</table></div>`;
-  m.appendChild(p);
-}
-
-// ---------- PRODUCTOS ----------
-let filtroCategoriaCatalogo='todos';
-let filtroSoloStockBajo=false;
-let busquedaCatalogo='';
-function renderProductos(m){
-  const layout=document.createElement('div');
-  layout.className='products-layout';
-  const list=panel('Catálogo');
-  const cards=db.productos.map(pr=>{
-    const cat=byId(db.categorias,pr.categoria), marca=byId(db.marcas,pr.marca);
-    const category=cat?cat.nombre:'Sin categoría', brand=marca?marca.nombre:'Sin marca';
-    const low=pr.stock<=pr.stock_min, noStock=pr.stock<=0;
-    const stockLabel=noStock?'Sin unidades':low?'Stock bajo':'Stock suficiente';
-    const stockClass=noStock?'is-none':low?'is-low':'is-ok';
-    const search=(pr.nombre+' '+category+' '+brand).toLowerCase();
-    return `<article class="product-tile" data-search="${search}" data-category="${pr.categoria}" data-low="${low}">
-      <div class="tile-top"><div class="tile-icon">${catIcon(category)}</div><span class="stock-status ${stockClass}"><i></i>${stockLabel}</span></div>
-      <div class="tile-info"><span class="tile-category">${category} · ${brand}</span><h3>${pr.nombre}</h3></div>
-      <div class="tile-bottom"><div><span class="tile-price-label">Precio de venta</span><strong class="tile-price">${money(pr.precio)}</strong></div><div class="tile-stock"><strong>${pr.stock}</strong><span>unidades</span></div></div>
-      <div class="tile-actions"><span class="product-state ${pr.activo?'active':'inactive'}"><i></i>${pr.activo?'Activo':'Inactivo'}</span><button type="button" class="btn toggle" onclick="toggleProducto(${pr.id})">${pr.activo?'Desactivar':'Activar'}</button></div>
-    </article>`;
-  }).join('');
-  const categoryChips=db.categorias.map(c=>`<button type="button" class="filter-chip" data-category-chip="${c.id}" onclick="setCategoriaCatalogo('${c.id}',this)">${c.nombre}</button>`).join('');
-  const lowCount=db.productos.filter(p=>p.stock<=p.stock_min).length;
-  list.innerHTML+=`<div class="catalog-toolbar"><label class="catalog-search"><span aria-hidden="true">⌕</span><input id="catalog-search-input" type="search" placeholder="Buscar producto, categoría o marca…" oninput="filtrarCatalogo(this.value)" aria-label="Buscar en el catálogo"></label><span id="catalog-count" class="catalog-count">${db.productos.length} productos</span></div>
-    <div class="catalog-filters"><button type="button" class="filter-chip" data-category-chip="todos" onclick="setCategoriaCatalogo('todos',this)">Todos</button>${categoryChips}<button type="button" class="filter-chip stock-filter" id="low-stock-filter" onclick="toggleStockBajo(this)">Stock bajo <span>${lowCount}</span></button></div>
-    <div class="product-cards">${cards||'<div class="catalog-empty">Todavía no hay productos en el catálogo.</div>'}</div>
-    <div id="catalog-empty-search" class="catalog-empty" style="display:none">No encontramos productos con esos filtros.</div>`;
-  const form=panel('Nuevo producto');
-  form.classList.add('product-form');
-  form.innerHTML+=`<p class="small" style="margin:0 0 14px">Sumá un artículo al catálogo.</p>
-    <div class="product-form-fields">
-      <div class="field"><label>Nombre</label><input id="pf-nombre" placeholder="Ej. Paleta Control Pro"></div>
-      <div class="field"><label>Categoría</label><select id="pf-cat">${db.categorias.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
-      <div class="field"><label>Marca</label><select id="pf-marca">${db.marcas.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
-      <div class="field"><label>Precio de venta</label><input id="pf-precio" type="number" min="0" placeholder="0"></div>
-      <div class="field"><label>Stock inicial</label><input id="pf-stock" type="number" min="0" value="0"></div>
-      <div class="field"><label>Stock mínimo</label><input id="pf-min" type="number" min="0" value="0"></div>
-      <button class="btn" onclick="addProducto()">Agregar producto</button>
-    </div>`;
-  layout.appendChild(list);
-  layout.appendChild(form);
-  m.appendChild(layout);
-  const input=document.getElementById('catalog-search-input');
-  input.value=busquedaCatalogo;
-  document.querySelectorAll('[data-category-chip]').forEach(button=>button.classList.toggle('active',button.dataset.categoryChip===filtroCategoriaCatalogo));
-  const lowButton=document.getElementById('low-stock-filter');
-  if(lowButton)lowButton.classList.toggle('active',filtroSoloStockBajo);
-  aplicarFiltrosCatalogo();
-}
-function filtrarCatalogo(query){
-  busquedaCatalogo=(query||'').toLocaleLowerCase('es').trim();
-  aplicarFiltrosCatalogo();
-}
-function setCategoriaCatalogo(category){
-  filtroCategoriaCatalogo=String(category);
-  document.querySelectorAll('[data-category-chip]').forEach(button=>button.classList.toggle('active',button.dataset.categoryChip===filtroCategoriaCatalogo));
-  aplicarFiltrosCatalogo();
-}
-function toggleStockBajo(button){
-  filtroSoloStockBajo=!filtroSoloStockBajo;
-  button.classList.toggle('active',filtroSoloStockBajo);
-  aplicarFiltrosCatalogo();
-}
-function aplicarFiltrosCatalogo(){
-  const cards=[...document.querySelectorAll('.product-tile')];
-  let visible=0;
-  cards.forEach(card=>{
-    const matchSearch=card.dataset.search.includes(busquedaCatalogo);
-    const matchCategory=filtroCategoriaCatalogo==='todos'||card.dataset.category===filtroCategoriaCatalogo;
-    const matchLow=!filtroSoloStockBajo||card.dataset.low==='true';
-    const show=matchSearch&&matchCategory&&matchLow;
-    card.style.display=show?'':'none';
-    if(show)visible++;
-  });
-  const count=document.getElementById('catalog-count');
-  if(count)count.textContent=visible===cards.length?`${cards.length} productos`:`${visible} de ${cards.length} productos`;
-  const empty=document.getElementById('catalog-empty-search');
-  if(empty)empty.style.display=cards.length&&!visible?'block':'none';
-}
-function addProducto(){
-  const nombre=document.getElementById('pf-nombre').value.trim();
-  if(!nombre){ alert('Ingresá un nombre de producto.'); return; }
-  db.productos.push({
-    id:nid('prod'), nombre,
-    categoria:Number(document.getElementById('pf-cat').value),
-    marca:Number(document.getElementById('pf-marca').value),
-    precio:Number(document.getElementById('pf-precio').value)||0,
-    stock:Number(document.getElementById('pf-stock').value)||0,
-    stock_min:Number(document.getElementById('pf-min').value)||0,
-    activo:true
-  });
-  save(); render();
-}
-function toggleProducto(id){ const pr=byId(db.productos,id); pr.activo=!pr.activo; save(); render(); }
-
-// ---------- GENTE (clientes y vendedores) ----------
-function renderGente(m){
-  const p1=panel('Nuevo cliente');
-  p1.innerHTML+=`<div class="row">
-    <div class="field"><label>Nombre y apellido</label><input id="cf-nombre"></div>
-    <div class="field"><label>Teléfono</label><input id="cf-tel"></div>
-    <button class="btn" onclick="addCliente()">Agregar</button></div>`;
-  m.appendChild(p1);
-  const l1=panel('Clientes');
-  l1.innerHTML+=`<div class="tablewrap"><table><tr><th>Nombre</th><th>Teléfono</th></tr>
-    ${db.clientes.map(c=>`<tr><td>${c.nombre}</td><td>${c.telefono||'-'}</td></tr>`).join('') || '<tr><td colspan="2" class="small">Sin clientes cargados.</td></tr>'}</table></div>`;
-  m.appendChild(l1);
-
-  const p2=panel('Nuevo vendedor');
-  p2.innerHTML+=`<div class="row">
-    <div class="field"><label>Nombre y apellido</label><input id="vf-nombre"></div>
-    <div class="field"><label>Zona</label><select id="vf-zona">${db.zonas.map(z=>`<option value="${z.id}">${z.nombre}</option>`).join('')}</select></div>
-    <div class="field"><label>% Comisión</label><input id="vf-com" type="number" min="0" max="100" value="10"></div>
-    <button class="btn" onclick="addVendedor()">Agregar</button></div>`;
-  m.appendChild(p2);
-  const l2=panel('Vendedores');
-  l2.innerHTML+=`<div class="tablewrap"><table><tr><th>Nombre</th><th>Zona</th><th>Comisión</th></tr>
-    ${db.vendedores.map(v=>`<tr><td>${v.nombre}</td><td>${byId(db.zonas,v.zona)?.nombre||''}</td><td>${v.comision}%</td></tr>`).join('') || '<tr><td colspan="3" class="small">Sin vendedores cargados.</td></tr>'}</table></div>`;
-  m.appendChild(l2);
-}
-function addCliente(){
-  const nombre=document.getElementById('cf-nombre').value.trim();
-  if(!nombre){ alert('Ingresá el nombre del cliente.'); return; }
-  db.clientes.push({id:nid('cli'), nombre, telefono:document.getElementById('cf-tel').value.trim()});
-  save(); render();
-}
-function addVendedor(){
-  const nombre=document.getElementById('vf-nombre').value.trim();
-  if(!nombre){ alert('Ingresá el nombre del vendedor.'); return; }
-  db.vendedores.push({id:nid('vend'), nombre, zona:Number(document.getElementById('vf-zona').value), comision:Number(document.getElementById('vf-com').value)||0});
-  save(); render();
-}
-
-// ---------- CATALOGOS (zonas, proveedores, categorías, marcas) ----------
-function simpleCrud(m, title, arr, fields){
-  const p=panel(title);
-  const inputs=fields.map(f=>`<div class="field"><label>${f.label}</label><input id="sc-${title}-${f.key}"></div>`).join('');
-  p.innerHTML+=`<div class="row">${inputs}<button class="btn" onclick="addSimple('${title}')">Agregar</button></div>
-    <div class="tablewrap"><table><tr>${fields.map(f=>`<th>${f.label}</th>`).join('')}</tr>
-    ${arr.map(x=>`<tr>${fields.map(f=>`<td>${x[f.key]||'-'}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${fields.length}" class="small">Sin registros.</td></tr>`}</table></div>`;
-  m.appendChild(p);
-}
-const SIMPLE_MAP={};
-function renderCatalogos(m){
-  SIMPLE_MAP['Zonas']={arr:db.zonas, seq:'zona', fields:[{key:'nombre',label:'Nombre'}]};
-  SIMPLE_MAP['Proveedores']={arr:db.proveedores, seq:'prov', fields:[{key:'nombre',label:'Nombre'},{key:'telefono',label:'Teléfono'}]};
-  SIMPLE_MAP['Categorías']={arr:db.categorias, seq:'cat', fields:[{key:'nombre',label:'Nombre'}]};
-  SIMPLE_MAP['Marcas']={arr:db.marcas, seq:'marca', fields:[{key:'nombre',label:'Nombre'}]};
-  simpleCrud(m,'Zonas',db.zonas,SIMPLE_MAP['Zonas'].fields);
-  simpleCrud(m,'Proveedores',db.proveedores,SIMPLE_MAP['Proveedores'].fields);
-  simpleCrud(m,'Categorías',db.categorias,SIMPLE_MAP['Categorías'].fields);
-  simpleCrud(m,'Marcas',db.marcas,SIMPLE_MAP['Marcas'].fields);
-}
-function addSimple(title){
-  const conf=SIMPLE_MAP[title];
-  const obj={id:nid(conf.seq)};
-  let ok=true;
-  conf.fields.forEach(f=>{ const v=document.getElementById(`sc-${title}-${f.key}`).value.trim(); if(f.key==='nombre' && !v) ok=false; obj[f.key]=v; });
-  if(!ok){ alert('Ingresá al menos el nombre.'); return; }
-  conf.arr.push(obj); save(); render();
-}
-
-// ---------- VENTAS ----------
-let ventaLineas=[];
-function renderVentas(m){
-  const p=panel('Registrar venta');
-  p.innerHTML+=`<div class="sale-layout">
-    <div class="sale-entry">
-      <div class="row">
-        <div class="field"><label>Vendedor</label><select id="vt-vend">${db.vendedores.map(v=>`<option value="${v.id}">${v.nombre}</option>`).join('') || '<option value="">Cargá un vendedor primero</option>'}</select></div>
-        <div class="field"><label>Cliente (opcional)</label><select id="vt-cli"><option value="">Consumidor final</option>${db.clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`).join('')}</select></div>
-      </div>
-      <div class="row" style="margin-top:16px">
-        <div class="field"><label>Producto</label><select id="vt-prod">${db.productos.filter(p=>p.activo).map(p=>`<option value="${p.id}">${p.nombre} (stock ${p.stock})</option>`).join('')}</select></div>
-        <div class="field" style="max-width:130px"><label>Cantidad</label><input id="vt-cant" type="number" min="1" value="1"></div>
-        <button class="btn ghost" onclick="addLineaVenta()">＋ Agregar producto</button>
-      </div>
-      <p class="small" style="margin-top:18px">Seleccioná productos y cantidades. El stock se descuenta al registrar la venta.</p>
-    </div>
-    <aside class="sale-cart">
-      <div class="cart-heading"><h3>Tu carrito</h3><span id="vt-count" class="pill">0 productos</span></div>
-      <div id="vt-lineas" class="cart-lines"></div>
-      <div class="cart-total"><span>Total</span><strong id="vt-total">$0</strong></div>
-      <button class="btn cart-submit" onclick="confirmarVenta()">Registrar venta</button>
-    </aside>
-  </div>`;
-  m.appendChild(p);
-  pintarLineasVenta();
-  const hist=panel('Historial de ventas');
-  hist.innerHTML+=`<div class="tablewrap"><table><tr><th>#</th><th>Vendedor</th><th>Cliente</th><th>Total</th><th>Comisión</th></tr>
-  ${db.ventas.slice().reverse().map(v=>`<tr><td>${v.id}</td><td>${byId(db.vendedores,v.vendedor)?.nombre||'-'}</td><td>${byId(db.clientes,v.cliente)?.nombre||'Consumidor final'}</td><td>${money(v.total)}</td><td>${money(v.comision_monto)}</td></tr>`).join('') || '<tr><td colspan="5" class="small">Sin ventas.</td></tr>'}</table></div>`;
-  m.appendChild(hist);
-}
-function pintarLineasVenta(){
-  const box=document.getElementById('vt-lineas');
-  if(!box) return;
-  const count=ventaLineas.reduce((sum,l)=>sum+l.cantidad,0);
-  document.getElementById('vt-count').textContent=`${count} ${count===1?'producto':'productos'}`;
-  const total=ventaLineas.reduce((sum,l)=>sum+byId(db.productos,l.producto).precio*l.cantidad,0);
-  document.getElementById('vt-total').textContent=money(total);
-  if(!ventaLineas.length){ box.innerHTML='<div class="cart-empty">Tu carrito está vacío.<br><span>Agregá productos para comenzar.</span></div>'; return; }
-  box.innerHTML=ventaLineas.map((l,i)=>{
-    const pr=byId(db.productos,l.producto);
-    return `<div class="cart-item"><div class="cart-product"><strong>${pr.nombre}</strong><span>${l.cantidad} × ${money(pr.precio)}</span></div><div class="cart-price">${money(pr.precio*l.cantidad)}</div><button type="button" class="cart-remove" aria-label="Quitar ${pr.nombre}" onclick="quitarLineaVenta(${i})">×</button></div>`;
-  }).join('');
-}
-function addLineaVenta(){
-  const prodId=Number(document.getElementById('vt-prod').value);
-  const cant=Number(document.getElementById('vt-cant').value)||0;
-  const pr=byId(db.productos,prodId);
-  if(!pr || cant<=0){ alert('Elegí un producto y una cantidad válida.'); return; }
-  const yaEnCarrito=ventaLineas.filter(l=>l.producto===prodId).reduce((s,l)=>s+l.cantidad,0);
-  if(yaEnCarrito+cant>pr.stock){ alert(`No hay stock suficiente de ${pr.nombre}. Disponible: ${pr.stock}.`); return; }
-  ventaLineas.push({producto:prodId, cantidad:cant});
-  pintarLineasVenta();
-}
-function quitarLineaVenta(i){ ventaLineas.splice(i,1); pintarLineasVenta(); }
-function confirmarVenta(){
-  const vendId=Number(document.getElementById('vt-vend').value);
-  const vend=byId(db.vendedores,vendId);
-  if(!vend){ alert('Cargá un vendedor antes de registrar la venta.'); return; }
-  if(!ventaLineas.length){ alert('Agregá al menos un producto.'); return; }
-  const cliVal=document.getElementById('vt-cli').value;
-  let total=0;
-  const detalle=ventaLineas.map(l=>{
-    const pr=byId(db.productos,l.producto);
-    const subtotal=pr.precio*l.cantidad;
-    total+=subtotal;
-    return {producto:pr.id, cantidad:l.cantidad, precio_unitario:pr.precio, subtotal};
-  });
-  detalle.forEach(d=>{ byId(db.productos,d.producto).stock-=d.cantidad; });
-  const comision_monto=Math.round(total*(vend.comision/100));
-  db.ventas.push({id:nid('venta'), vendedor:vendId, cliente:cliVal?Number(cliVal):null, fecha:new Date().toISOString(), detalle, total, comision_pct:vend.comision, comision_monto});
-  ventaLineas=[]; save(); render();
-}
-
-// ---------- COMPRAS ----------
-let compraLineas=[];
-function renderCompras(m){
-  const p=panel('Registrar compra');
-  p.innerHTML+=`<div class="row">
-    <div class="field"><label>Proveedor</label><select id="cp-prov">${db.proveedores.map(pv=>`<option value="${pv.id}">${pv.nombre}</option>`).join('') || '<option value="">Cargá un proveedor primero</option>'}</select></div>
-  </div>
-  <div class="row" style="margin-top:10px">
-    <div class="field"><label>Producto</label><select id="cp-prod">${db.productos.map(p=>`<option value="${p.id}">${p.nombre}</option>`).join('')}</select></div>
-    <div class="field"><label>Cantidad</label><input id="cp-cant" type="number" min="1" value="1"></div>
-    <div class="field"><label>Precio unitario</label><input id="cp-precio" type="number" min="0"></div>
-    <button class="btn ghost" onclick="addLineaCompra()">Agregar línea</button>
-  </div>
-  <div id="cp-lineas" style="margin-top:10px"></div>
-  <div class="row" style="margin-top:10px"><button class="btn" onclick="confirmarCompra()">Registrar compra</button></div>`;
-  m.appendChild(p);
-  pintarLineasCompra();
-  const hist=panel('Historial de compras');
-  hist.innerHTML+=`<div class="tablewrap"><table><tr><th>#</th><th>Proveedor</th><th>Total</th></tr>
-  ${db.compras.slice().reverse().map(c=>`<tr><td>${c.id}</td><td>${byId(db.proveedores,c.proveedor)?.nombre||'-'}</td><td>${money(c.total)}</td></tr>`).join('') || '<tr><td colspan="3" class="small">Sin compras.</td></tr>'}</table></div>`;
-  m.appendChild(hist);
-}
-function pintarLineasCompra(){
-  const box=document.getElementById('cp-lineas');
-  if(!box) return;
-  if(!compraLineas.length){ box.innerHTML='<div class="small">Todavía no agregaste productos a esta compra.</div>'; return; }
-  box.innerHTML=compraLineas.map((l,i)=>{
-    const pr=byId(db.productos,l.producto);
-    return `<div class="detail-row">${pr.nombre} × ${l.cantidad} — ${money(l.precio*l.cantidad)} <a class="link" onclick="quitarLineaCompra(${i})">Quitar</a></div>`;
-  }).join('');
-}
-function addLineaCompra(){
-  const prodId=Number(document.getElementById('cp-prod').value);
-  const cant=Number(document.getElementById('cp-cant').value)||0;
-  const precio=Number(document.getElementById('cp-precio').value)||0;
-  if(!prodId || cant<=0){ alert('Elegí un producto y una cantidad válida.'); return; }
-  compraLineas.push({producto:prodId, cantidad:cant, precio});
-  pintarLineasCompra();
-}
-function quitarLineaCompra(i){ compraLineas.splice(i,1); pintarLineasCompra(); }
-function confirmarCompra(){
-  const provId=Number(document.getElementById('cp-prov').value);
-  if(!provId){ alert('Cargá un proveedor antes de registrar la compra.'); return; }
-  if(!compraLineas.length){ alert('Agregá al menos un producto.'); return; }
-  let total=0;
-  const detalle=compraLineas.map(l=>{ const subtotal=l.precio*l.cantidad; total+=subtotal; return {producto:l.producto, cantidad:l.cantidad, precio_unitario:l.precio, subtotal}; });
-  detalle.forEach(d=>{ byId(db.productos,d.producto).stock+=d.cantidad; });
-  db.compras.push({id:nid('compra'), proveedor:provId, fecha:new Date().toISOString(), detalle, total});
-  compraLineas=[]; save(); render();
-}
-
-// ---------- REPORTES ----------
-function renderReportes(m){
-  const bajos=db.productos.filter(p=>p.activo && p.stock<=p.stock_min);
-  const p1=panel('Stock bajo mínimo');
-  p1.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Stock</th><th>Mínimo</th></tr>
-  ${bajos.map(p=>`<tr><td>${p.nombre}</td><td>${p.stock}</td><td>${p.stock_min}</td></tr>`).join('') || '<tr><td colspan="3" class="small">Ningún producto por debajo del mínimo.</td></tr>'}</table></div>`;
-  m.appendChild(p1);
-
-  const porVend={};
-  db.ventas.forEach(v=>{ porVend[v.vendedor]=porVend[v.vendedor]||{total:0,comision:0}; porVend[v.vendedor].total+=v.total; porVend[v.vendedor].comision+=v.comision_monto; });
-  const p2=panel('Ventas y comisiones por vendedor');
-  p2.innerHTML+=`<div class="tablewrap"><table><tr><th>Vendedor</th><th>Total vendido</th><th>Comisión</th></tr>
-  ${Object.keys(porVend).map(id=>`<tr><td>${byId(db.vendedores,id)?.nombre||'-'}</td><td>${money(porVend[id].total)}</td><td>${money(porVend[id].comision)}</td></tr>`).join('') || '<tr><td colspan="3" class="small">Sin ventas registradas todavía.</td></tr>'}</table></div>`;
-  m.appendChild(p2);
-
-  const unidades={};
-  db.ventas.forEach(v=>v.detalle.forEach(d=>{ unidades[d.producto]=(unidades[d.producto]||0)+d.cantidad; }));
-  const ranking=Object.entries(unidades).sort((a,b)=>b[1]-a[1]);
-  const p3=panel('Productos más vendidos');
-  p3.innerHTML+=`<div class="tablewrap"><table><tr><th>Producto</th><th>Unidades vendidas</th></tr>
-  ${ranking.map(([id,u])=>`<tr><td>${byId(db.productos,id)?.nombre||'-'}</td><td>${u}</td></tr>`).join('') || '<tr><td colspan="2" class="small">Sin ventas registradas todavía.</td></tr>'}</table></div>`;
-  m.appendChild(p3);
-}
-
-render();
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>
