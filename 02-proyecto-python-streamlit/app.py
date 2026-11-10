@@ -9,7 +9,7 @@ from config.settings import obtener_settings
 from services.permisos import tiene_permiso
 from utils.estilos import aplicar_estilos, logo_html
 from utils.excepciones import ConfiguracionFaltante
-from views import login, usuarios
+from views import catalogo, login, reportes, stock, usuarios, ventas
 
 st.set_page_config(page_title="Vibra Deportiva", layout="wide")
 aplicar_estilos(st)
@@ -27,12 +27,16 @@ if "usuario" not in st.session_state:
 def inicio() -> None:
     usuario = st.session_state["usuario"]
     st.header(f"Hola, {usuario.nombre}")
-    st.write(f"Rol: **{usuario.rol}**. Los módulos de productos, stock, compras y ventas se agregan en las próximas etapas.")
+    st.write(f"Rol: **{usuario.rol}**. Usá el menú de la izquierda.")
 
 
 # nombre del menú -> (función de la vista, permiso necesario o None si es libre)
 PAGINAS = {
     "Inicio": (inicio, None),
+    "Catálogo": (catalogo.mostrar, "catalogo.ver"),
+    "Stock": (stock.mostrar, "stock.ver_propio"),
+    "Ventas": (ventas.mostrar, "ventas.registrar"),
+    "Panel del dueño": (reportes.mostrar, "reportes.ver"),
     "Usuarios": (usuarios.mostrar, "usuarios.gestionar"),
 }
 
