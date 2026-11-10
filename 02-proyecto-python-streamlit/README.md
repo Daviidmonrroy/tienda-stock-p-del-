@@ -1,54 +1,59 @@
 # Vibra Deportiva · Python, Streamlit y MySQL
 
 Migración del sistema para la cursada: Python, Streamlit, MySQL, SQLAlchemy y bcrypt.
-Plan completo: `../docs/migracion/00-auditoria-y-plan.md`. Informe de lo hecho: `../docs/migracion/01-etapas-3-a-5.md`.
 
-**Estado: etapas 3, 4 y 5 escritas (modelo, configuración, autenticación y usuarios).**
-Lo que se ejecutó y lo que falta ejecutar está detallado en el informe. Resumen: las pruebas que no necesitan librerías
-externas pasaron (62); el resto (SQLAlchemy, bcrypt, MySQL, Streamlit) **todavía no se ejecutó** y hay que probarlo en una
-computadora con todo instalado.
+La [guía de defensa](docs/guia-defensa.md) explica el alcance, las reglas de negocio, el recorrido de las operaciones y las decisiones del código. También se conserva el [plan de migración](../docs/migracion/00-auditoria-y-plan.md) y el [informe histórico de etapas 3 a 5](../docs/migracion/01-etapas-3-a-5.md).
+
+**Estado:** el repositorio contiene módulos para autenticación y usuarios, catálogo, stock, compras, ventas, clientes, comisiones y reportes. La disponibilidad de código no confirma por sí sola que la aplicación esté integrada y probada en una computadora: la conexión de Streamlit, SQLAlchemy, bcrypt y MySQL debe verificarse en el entorno donde se vaya a presentar.
 
 ## Preparar la computadora
 
 1. Python 3.11 o más nuevo, Git y Docker Desktop (o un MySQL 8 instalado).
 2. Desde esta carpeta:
 
-```
+```powershell
 python -m venv .venv
-# Windows:      .venv\Scripts\activate
-# Mac o Linux:  source .venv/bin/activate
-
+.venv\Scripts\activate
 pip install -r requirements.txt
-
-copy .env.example .env        # Mac o Linux: cp .env.example .env
-# Editar .env: poner claves propias en DB_PASSWORD y DB_ROOT_PASSWORD
-
-docker compose up -d          # levanta MySQL (solo si se usa Docker)
+copy .env.example .env
 ```
 
-## Probar paso a paso (en este orden)
+Editá `.env` con claves propias para `DB_PASSWORD` y `DB_ROOT_PASSWORD`. No publiques ese archivo.
 
-```
-python -m pytest -q                     # 1. pruebas. Debe decir: passed, sin skipped si todo está instalado
-python -m scripts.crear_tablas          # 2. crea las tablas en MySQL
-python -m scripts.crear_admin           # 3. crea el primer administrador (la clave no se muestra)
-streamlit run app.py                    # 4. abre la app en el navegador
+Si usás Docker para MySQL:
+
+```powershell
+docker compose up -d
 ```
 
-Si un paso falla, copiar el error completo (sin mostrar el contenido de `.env`) y pasarlo.
+## Ejecutar
+
+En este orden:
+
+```powershell
+python -m pytest -q
+python -m scripts.crear_tablas
+python -m scripts.crear_admin
+streamlit run app.py
+```
+
+La suite debe ejecutarse en el mismo entorno donde están instaladas las dependencias. Luego hay que comprobar la conexión a la base y recorrer los flujos principales en la aplicación. No se afirma aquí un resultado de ejecución actual.
+
+Si un paso falla, guardar el error completo sin compartir el contenido de `.env`.
 
 ## Estructura
 
 ```
-app.py            punto de entrada de Streamlit
-config/           Settings (dataclass frozen + slots) y variables de entorno
-database/         DeclarativeBase, create_engine, sessionmaker, session_scope
-models/           Usuario, PerfilUsuario (1 a 1), Zona
-repositories/     consultas (incluye UPDATE con text())
-services/         reglas de negocio: auth, usuarios, zonas, permisos
-views/            pantallas de Streamlit: login, usuarios
-utils/            excepciones, validaciones (regex), dinero (Decimal), seguridad (bcrypt), estilos
-scripts/          crear_tablas, crear_admin (consola: getpass, __main__, SystemExit)
-sql/schema.sql    esquema completo revisado (nivel físico de referencia)
-tests/            pytest
+app.py            entrada de Streamlit: sesión, menú y permisos de navegación
+config/           Settings y variables de entorno
+database/         engine, sesiones y transacciones
+models/           modelos ORM
+repositories/     consultas y acceso a datos
+services/         reglas de negocio y casos de uso
+views/            pantallas de Streamlit
+utils/            excepciones, validaciones, dinero, seguridad y estilos
+scripts/          crear tablas y primer administrador
+sql/schema.sql    esquema de referencia
+tests/            pruebas automatizadas
+docs/guia-defensa.md explicación para la presentación
 ```
