@@ -12,7 +12,8 @@ from services.auth_service import UsuarioSesion
 from services.permisos import exigir_permiso, tiene_permiso
 from services.reglas_catalogo import validar_precios
 from utils.excepciones import ErrorDeValidacion, NoEncontrado
-from utils.validaciones import validar_color_hex, validar_sku, validar_texto_corto
+from utils.validaciones import (validar_color_hex, validar_entero_no_negativo, validar_sku,
+                                validar_texto_corto)
 
 
 @dataclass(frozen=True, slots=True)
@@ -128,12 +129,7 @@ def importar_planilla(actor: UsuarioSesion, filas: list[dict]) -> int:
                         fila.get("costo"), fila.get("precio_minimo"),
                         fila.get("precio_lista"), fila.get("precio_maximo")
                     )
-                    stock_raw = fila.get("stock_minimo", 0)
-                    stock_minimo = int(stock_raw or 0)
-                    if isinstance(stock_raw, bool) or str(stock_minimo) != str(stock_raw).strip() and float(stock_raw) != stock_minimo:
-                        raise ValueError
-                    if stock_minimo < 0:
-                        raise ValueError
+                    stock_minimo = validar_entero_no_negativo(fila.get("stock_minimo"), "stock mínimo")
                     sku_key = sku.casefold()
                     variante_key = (nombre.casefold(), categoria_id, marca_id, talle.casefold(), color.casefold())
                     if sku_key in skus_archivo:
@@ -148,7 +144,7 @@ def importar_planilla(actor: UsuarioSesion, filas: list[dict]) -> int:
                         "minimo": minimo, "lista": lista, "maximo": maximo, "stock_minimo": stock_minimo,
                     })
                 except (ErrorDeValidacion, TypeError, ValueError) as error:
-                    mensaje = str(error) if isinstance(error, ErrorDeValidacion) else "Stock mínimo inválido; debe ser un entero igual o mayor que cero."
+                    mensaje = str(error) if isinstance(error, ErrorDeValidacion) else "Hay un dato con formato inválido."
                     errores.append(f"Fila {numero}: {mensaje}")
 
             if normalizadas:

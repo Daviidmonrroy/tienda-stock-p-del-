@@ -123,3 +123,21 @@ def validar_monto(valor: object, campo: str, permitir_cero: bool = False) -> Dec
     if monto < 0 or (monto == 0 and not permitir_cero) or monto > MONTO_MAXIMO:
         raise ErrorDeValidacion(campo, f"{campo.capitalize()}: tiene que ser mayor que cero.")
     return monto
+
+
+def validar_entero_no_negativo(valor: object, campo: str, por_defecto: int = 0) -> int:
+    """Entero >= 0 para datos que vienen de planillas (pueden ser int, float de Excel o texto).
+    Una celda vacía (None o texto en blanco) devuelve el valor por defecto."""
+    from decimal import Decimal, InvalidOperation
+    if valor is None or (isinstance(valor, str) and not valor.strip()):
+        return por_defecto
+    mensaje = f"{campo.capitalize()}: tiene que ser un entero igual o mayor que cero."
+    if isinstance(valor, bool):
+        raise ErrorDeValidacion(campo, mensaje)
+    try:
+        numero = Decimal(valor.strip()) if isinstance(valor, str) else Decimal(str(valor))
+    except InvalidOperation as error:
+        raise ErrorDeValidacion(campo, mensaje) from error
+    if not numero.is_finite() or numero != numero.to_integral_value() or numero < 0:
+        raise ErrorDeValidacion(campo, mensaje)
+    return int(numero)

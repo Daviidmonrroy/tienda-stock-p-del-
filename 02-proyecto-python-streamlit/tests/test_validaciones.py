@@ -76,3 +76,21 @@ def test_telefono():
     assert v.validar_telefono(" ") is None
     with pytest.raises(ErrorDeValidacion):
         v.validar_telefono("abc")
+
+
+import pytest as _pytest  # noqa: E402
+
+from utils.excepciones import ErrorDeValidacion as _EV  # noqa: E402
+from utils.validaciones import validar_entero_no_negativo  # noqa: E402
+
+
+@_pytest.mark.parametrize("valor,esperado", [(0, 0), (5, 5), ("5", 5), (" 5 ", 5), (5.0, 5), ("5.0", 5),
+                                              (None, 0), ("", 0), ("   ", 0)])
+def test_entero_no_negativo_acepta(valor, esperado):
+    assert validar_entero_no_negativo(valor, "stock mínimo") == esperado
+
+
+@_pytest.mark.parametrize("valor", [-1, "-1", 5.5, "5.5", "abc", True, "NaN", "inf"])
+def test_entero_no_negativo_rechaza(valor):
+    with _pytest.raises(_EV):
+        validar_entero_no_negativo(valor, "stock mínimo")
