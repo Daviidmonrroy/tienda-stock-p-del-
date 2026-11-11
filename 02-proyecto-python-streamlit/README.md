@@ -33,11 +33,18 @@ En este orden:
 ```powershell
 python -m pytest -q
 python -m scripts.crear_tablas
-python -m scripts.crear_admin
+python -m scripts.semilla
 streamlit run app.py
 ```
 
-La suite debe ejecutarse en el mismo entorno donde están instaladas las dependencias. Luego hay que comprobar la conexión a la base y recorrer los flujos principales en la aplicación. No se afirma aquí un resultado de ejecución actual.
+- `python -m scripts.semilla` crea, si no existe, el administrador. El email sale de `ADMIN_EMAIL` en el `.env` y la clave del archivo `scripts/semilla_usuarios.txt` (copiar `scripts/semilla_usuarios.example.txt`; ese archivo no se sube a Git). En la base la clave queda hasheada con bcrypt. Alternativa interactiva: `python -m scripts.crear_admin`.
+- **Esquema SQL alternativo:** en vez de `crear_tablas` se puede ejecutar `sql/schema.sql` en MySQL 8 sobre una base vacía. Usar uno u otro, no ambos sobre la misma base.
+- **Modo demostración sin MySQL:** agregar `DB_ENGINE=sqlite` al `.env` usa un archivo local `vibra_demo.db`. No reemplaza a MySQL (no bloquea filas ni verifica claves foráneas estrictas). Ver `../docs/ia/04-modo-demo-sqlite.md`.
+
+## Estado de verificación
+
+- **Ejecutado:** el 10/11/2026 la suite completa dio **121 pruebas aprobadas, 0 fallas** (Codespaces, Python 3.14). Cubre validaciones, dinero, comisiones, permisos, configuración, bcrypt, login y el flujo completo (compra, transferencia, venta, fiado, anulación, liquidación y panel) contra SQLite.
+- **Pendiente de verificar:** las pantallas de Streamlit en un navegador y el comportamiento sobre MySQL real.
 
 Si un paso falla, guardar el error completo sin compartir el contenido de `.env`.
 
@@ -52,8 +59,9 @@ repositories/     consultas y acceso a datos
 services/         reglas de negocio y casos de uso
 views/            pantallas de Streamlit
 utils/            excepciones, validaciones, dinero, seguridad y estilos
-scripts/          crear tablas y primer administrador
-sql/schema.sql    esquema de referencia
+scripts/          crear tablas, semilla del administrador, crear_admin
+sql/schema.sql    esquema MySQL 8 completo (alternativa a crear_tablas)
 tests/            pruebas automatizadas
 docs/guia-defensa.md explicación para la presentación
+../docs/ia/        registro detallado de cambios (problema, código, solución)
 ```
