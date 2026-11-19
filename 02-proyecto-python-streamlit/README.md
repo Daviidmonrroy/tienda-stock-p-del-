@@ -65,3 +65,10 @@ tests/            pruebas automatizadas
 docs/guia-defensa.md explicación para la presentación
 ../docs/ia/        registro detallado de cambios (problema, código, solución)
 ```
+
+## Despliegue en Streamlit Community Cloud
+- Main file path: `02-proyecto-python-streamlit/app.py`. Las variables se cargan en **Settings → Secrets** (formato TOML, valores entre comillas).
+- Al iniciar, la app crea sola las tablas y el administrador si faltan (`utils/arranque.py`), porque en la nube no hay terminal.
+- Admin de demostración: `admin@vibra.com` / `Vibra2026`. Se pueden cambiar con los secrets `ADMIN_EMAIL` y `ADMIN_PASSWORD`.
+- Con `DB_ENGINE = "sqlite"` los datos se pierden al reiniciar; para que persistan hace falta un MySQL accesible desde internet.
+- Estado: lo nuevo (arranque automático y puente de secrets) tiene tests de lógica pura; el despliegue real en la nube todavía no fue probado.

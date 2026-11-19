@@ -3,10 +3,13 @@
 Streamlit vuelve a ejecutar este archivo completo en cada interacción; por eso el usuario
 logueado se guarda en st.session_state (una variable común se reiniciaría en cada ejecución).
 """
+import os
+
 import streamlit as st
 
 from config.settings import obtener_settings
 from services.permisos import tiene_permiso
+from utils import arranque
 from utils.estilos import aplicar_estilos, logo_html
 from utils.excepciones import ConfiguracionFaltante
 from views import catalogo, login, reportes, stock, usuarios, ventas
@@ -14,10 +17,33 @@ from views import catalogo, login, reportes, stock, usuarios, ventas
 st.set_page_config(page_title="Vibra Deportiva", layout="wide")
 aplicar_estilos(st)
 
+def _pasar_secrets_al_entorno() -> None:
+    """En Streamlit Cloud las variables se cargan en 'Secrets'. Las copiamos a os.environ para que settings las lea.
+    En local no hay secrets (se usa .env), por eso el try/except."""
+    try:
+        for clave, valor in st.secrets.items():
+            if isinstance(valor, (str, int, float, bool)):
+                os.environ.setdefault(clave, str(valor))
+    except Exception:
+        pass
+
+
+@st.cache_resource(show_spinner="Preparando la base de datos...")
+def _preparar_una_vez() -> bool:
+    """cache_resource: se ejecuta una sola vez por servidor, no en cada interacción."""
+    arranque.preparar_base()
+    return True
+
+
+_pasar_secrets_al_entorno()
 try:
     obtener_settings()
+    _preparar_una_vez()
 except ConfiguracionFaltante as error:
     st.error(str(error))
+    st.stop()
+except Exception as error:      # base inalcanzable, clave incorrecta, etc.
+    st.error(f"No se pudo preparar la base de datos: {error}")
     st.stop()
 
 if "usuario" not in st.session_state:
