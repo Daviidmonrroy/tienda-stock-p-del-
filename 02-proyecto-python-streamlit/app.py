@@ -35,7 +35,17 @@ def _preparar_una_vez() -> bool:
     return True
 
 
+def _modo_demo_si_no_hay_base() -> bool:
+    """Si no se configuró NINGUNA variable de base de datos, se usa SQLite (demo) en vez de fallar.
+    Si hay alguna configurada, no se toca nada: así un error de configuración real sigue viéndose."""
+    if any(os.environ.get(v) for v in ("DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "DB_ENGINE")):
+        return False
+    os.environ["DB_ENGINE"] = "sqlite"
+    return True
+
+
 _pasar_secrets_al_entorno()
+en_demo = _modo_demo_si_no_hay_base()
 try:
     obtener_settings()
     _preparar_una_vez()
@@ -45,6 +55,9 @@ except ConfiguracionFaltante as error:
 except Exception as error:      # base inalcanzable, clave incorrecta, etc.
     st.error(f"No se pudo preparar la base de datos: {error}")
     st.stop()
+
+if en_demo:
+    st.warning("Modo demostración (SQLite): los datos se borran cuando la app se reinicia.")
 
 if "usuario" not in st.session_state:
     st.session_state["usuario"] = None
